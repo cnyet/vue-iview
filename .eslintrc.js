@@ -1,5 +1,6 @@
 module.exports = {
   "extends": "standard",
+  "parser": 'babel-eslint',       //将默认的esprima解析脚本变为babel-eslint
   "env": { //支持浏览器，nodejs，es6环境
     "browser": true,
     "node": true,

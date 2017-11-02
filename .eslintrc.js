@@ -1,28 +1,35 @@
+// https://eslint.org/docs/user-guide/configuring
+//eslint配置文件
 module.exports = {
-  "extends": "standard",
-  "root": true,
-  "parser": "babel-eslint",       //将默认的esprima解析脚本变为babel-eslint
-  "env": { //支持浏览器，nodejs，es6环境
-    "browser": true
+  root: true,               //当前为根目录，不会向父级目录查找.eslintrc.js
+  parser: 'babel-eslint',   //将默认的esprima解析脚本变为babel-eslint
+  parserOptions: {          //解析选项
+    sourceType: 'module'    //设定代码是ECMAScript模块提供
   },
-  "parserOptions": {
-    "sourceType": "module", //设定代码是ECMAScript模块提供
-    "ecmaFeatures": {
-       "jsx": true
-    }
+  env: {                    //支持的环境
+    browser: true,
   },
-  "rules": {
-    "arrow-parens": 0,        //禁用规则要求箭头函数的参数使用圆括号
-    "generator-star-spacing": 0,        //禁用规则强制 generator 函数中 * 号周围使用一致的空格
-    "quotes": ["error", "double"], //引号用双引号，警告提示
-    "camelcase": 1, //属性命名规则可以不使用驼峰命名法
-    "semi": 1, //分号结尾，
-    // 数组和对象键值对最后一个逗号， never参数：不能带末尾的逗号, always参数：必须带末尾的逗号，  
-    "comma-dangle": 2,
-    "curly": 1, //函数或者条件判断时需要统一使用大括号
-    "comma-spacing": 1, //不允许在逗号前面出现空格
-    "no-const-assign": 1, //禁止修改const声明的变量
-    "eol-last": 1, //代码间出现空白行，关闭提示,
-    "no-new": 0,
+  // https://github.com/standard/standard/blob/master/docs/RULES-en.md
+  //继承standard规则
+  extends: 'standard',
+  // required to lint *.vue files
+  plugins: [
+    'html'
+  ],
+  // add your custom rules here
+  rules: {
+    // allow paren-less arrow functions
+    //禁用规则要求箭头函数的参数使用圆括号
+    'arrow-parens': 0,
+    // allow async-await
+    //禁用规则强制 generator 函数中
+    'generator-star-spacing': 0,
+    "semi": 1,                //分号结尾，
+    "quotes": 0,              //禁用必须是单引号
+    "comma-dangle": 0,        //禁用数组和对象键值对最后一个逗号
+    "no-new": 0,              //禁止在使用new构造一个实例后不赋值
+    "no-new-wrappers": 0,     //禁止使用new创建包装实例
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
-};
+}

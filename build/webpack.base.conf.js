@@ -3,29 +3,31 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const isProduction = process.env.NODE_ENV === 'production'
-
+// 获取绝对路径
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
+  //入口文件
   entry: {
     app: './src/main.js'
   },
+  //文件输出路径
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
+    //设置别名
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
   },
+  //处理不同文件的加载器
   module: {
     rules: [
       {
@@ -34,6 +36,8 @@ module.exports = {
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
         options: {
+          fix: true,
+          emitError: true,
           formatter: require('eslint-friendly-formatter')
         }
       },
@@ -42,9 +46,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: utils.cssLoaders({
-            sourceMap: isProduction
-              ? config.build.productionSourceMap
-              : config.dev.cssSourceMap,
+            sourceMap: isProduction ? config.build.productionSourceMap : config.dev.cssSourceMap,
             extract: isProduction
           }),
           transformToRequire: {

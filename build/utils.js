@@ -1,8 +1,8 @@
 'use strict'
 const path = require('path')
 const config = require('../config')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin')        // 这里用来提取css样式
+// 资源文件的存放路径
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -22,6 +22,7 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
+  // 生成各种loader配置，并且配置了extract-text-pulgin
   function generateLoaders (loader, loaderOptions) {
     const loaders = [cssLoader]
     if (loader) {
@@ -36,6 +37,7 @@ exports.cssLoaders = function (options) {
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
+    // 配置extract-text-plugin提取样式
       return ExtractTextPlugin.extract({
         use: loaders,
         fallback: 'vue-style-loader'
@@ -48,7 +50,7 @@ exports.cssLoaders = function (options) {
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
-    postcss: generateLoaders(),
+    postcss: generateLoaders('postcss'),
     less: generateLoaders('less'),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),

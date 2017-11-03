@@ -1,12 +1,14 @@
 'use strict'
-const chalk = require('chalk')
-const semver = require('semver')
+// 检查NodeJS和npm的版本
+const chalk = require('chalk')                  //用于在控制台输出带颜色字体的node模块
+const semver = require('semver')                //语义化版本检查模块
 const packageConfig = require('../package.json')
-const shell = require('shelljs')
+const shell = require('shelljs')                //提供shell命令
+//开辟子进程执行指令cmd并返回结果
 function exec (cmd) {
   return require('child_process').execSync(cmd).toString().trim()
 }
-
+// node和npm版本需求
 const versionRequirements = [
   {
     name: 'node',
@@ -25,6 +27,7 @@ if (shell.which('npm')) {
 
 module.exports = function () {
   const warnings = []
+  // 依次判断版本是否符合要求
   for (let i = 0; i < versionRequirements.length; i++) {
     const mod = versionRequirements[i]
     if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
@@ -34,7 +37,7 @@ module.exports = function () {
       )
     }
   }
-
+  // 如果有警告则将其输出到控制台
   if (warnings.length) {
     console.log('')
     console.log(chalk.yellow('To use this template, you must update following to modules:'))

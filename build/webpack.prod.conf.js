@@ -5,10 +5,10 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')        //用于将static中的静态文件复制到产品文件夹dist
+const HtmlWebpackPlugin = require('html-webpack-plugin')        //动态生成html页面
+const ExtractTextPlugin = require('extract-text-webpack-plugin')//将一个包或束提取到一个单独的文件
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')   //用于优化和最小化css资源
 
 const env = process.env.NODE_ENV === 'testing'
   ? { NODE_ENV: '"testing"'}
@@ -16,6 +16,7 @@ const env = process.env.NODE_ENV === 'testing'
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
+    //配置出各种类型的预处理语言所需要使用的loader
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
@@ -27,6 +28,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
+  // webpack插件
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
@@ -40,6 +42,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: true
     }),
     // extract css into its own file
+    // 将css提取到单独的文件
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')
     }),
@@ -54,9 +57,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing'
-        ? 'index.html'
-        : config.build.index,
+      filename: process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
       template: 'index.html',
       inject: true,
       minify: {

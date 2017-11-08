@@ -24,7 +24,7 @@ module.exports = {
     // allow async-await
     //禁用规则强制 generator 函数中
     'generator-star-spacing': 0,
-    "semi": 1,                //分号结尾，
+    "semi": [1, "always"],                //分号结尾，
     "quotes": 0,              //禁用必须是单引号
     "comma-dangle": 0,        //禁用数组和对象键值对最后一个逗号
     "no-new": 0,              //禁止在使用new构造一个实例后不赋值

@@ -29,6 +29,18 @@ module.exports = {
     "comma-dangle": 0,        //禁用数组和对象键值对最后一个逗号
     "no-new": 0,              //禁止在使用new构造一个实例后不赋值
     "no-new-wrappers": 0,     //禁止使用new创建包装实例
+    "eol-last": 0,            //要求或禁止文件末尾保留一行空行
+    "space-before-function-paren": 0,     //要求或禁止函数圆括号之前有一个空格
+    "space-before-blocks": 0,           //强制在块之前使用一致的空格
+    "indent": 0,                  //强制使用一致的缩进
+    "keyword-spacing": 0,         //强制在关键字前后使用一致的空格
+    "key-spacing": 0,             //强制在对象字面量的属性中键和值之间使用一致的间距
+    "no-trailing-spaces": 0,      //禁用行尾空格
+    "no-multiple-empty-lines": 0, //禁止出现多行空行
+    "spaced-comment": 0,          //强制在注释中 // 或 /* 使用一致的空格
+    "space-infix-ops": 0,         //要求操作符周围有空格,
+    "padded-blocks": 0,           //要求或禁止块内填充
+    "comma-dangle": 0,            //要求或禁止末尾逗号
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }

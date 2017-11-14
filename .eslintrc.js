@@ -36,7 +36,7 @@ module.exports = {
     "keyword-spacing": 0,         //强制在关键字前后使用一致的空格
     "key-spacing": 0,             //强制在对象字面量的属性中键和值之间使用一致的间距
     "no-trailing-spaces": 0,      //禁用行尾空格
-    "no-multiple-empty-lines": 0, //禁止出现多行空行
+    "no-multiple-empty-lines": 1, //禁止出现多行空行
     "spaced-comment": 0,          //强制在注释中 // 或 /* 使用一致的空格
     "space-infix-ops": 0,         //要求操作符周围有空格,
     "padded-blocks": 0,           //要求或禁止块内填充

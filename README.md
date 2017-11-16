@@ -1,6 +1,7 @@
-# my-vue
+# 基于vue2.5.2的demo
 
-> A Vue.js project
+> - js框架：Vue2.5.2
+> - UI组件：Vux
 
 ## Build Setup
 

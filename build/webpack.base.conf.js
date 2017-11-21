@@ -43,19 +43,29 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-          loaders: utils.cssLoaders({
-            sourceMap: isProduction ? config.build.productionSourceMap : config.dev.cssSourceMap,
-            extract: isProduction
-          }),
-          transformToRequire: {
-            video: 'src',
-            source: 'src',
-            img: 'src',
-            image: 'xlink:href'
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              loaders: utils.cssLoaders({
+                sourceMap: isProduction ? config.build.productionSourceMap : config.dev.cssSourceMap,
+                extract: isProduction
+              }),
+              transformToRequire: {
+                video: 'src',
+                source: 'src',
+                img: 'src',
+                image: 'xlink:href'
+              }
+            }
+          }, {
+            loader: "iview-loader",
+            options: {
+              prefix: false   //prefix 设置为 true 后，所有 iView 组件标签名都可以使用前缀 i-
+            }
           }
-        }
+        ],
+
       },
       {
         test: /\.js$/,

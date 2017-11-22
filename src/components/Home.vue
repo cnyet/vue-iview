@@ -1,26 +1,24 @@
 <template>
   <div class="wrap">
-
-    <Form class="login">
-      <h1>{{title}}</h1>
-      <Card class="card">
-        <Avatar class="avatar" icon="person" size="large" />
+    <Card class="card">
+      <Avatar class="avatar" icon="person" size="large" />
+      <Form class="login">
         <FormItem prop="user">
           <Input type="text" placeholder="账号">
-              <Icon type="ios-person-outline" slot="prepend"></Icon>
+            <Icon type="person" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="password">
           <Input type="password" placeholder="密码">
-              <Icon type="ios-locked-outline" slot="prepend"></Icon>
+            <Icon type="locked" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem>
-            <Button type="primary">登录</Button>
-            <Button type="ghost" style="margin-left: 8px">重置</Button>
+          <Button type="primary" long>登录</Button>
         </FormItem>
-      </Card>
-    </Form>
+      </Form>
+      <div class="login-tip">直接输入账号和密码即可</div>
+    </Card>
     <!-- 路由出口,路由匹配到的组件将渲染在这里 -->
     <router-view></router-view>
   </div>
@@ -30,22 +28,30 @@
 export default {
   name: "home",
   data () {
-    return {
-      title: "Hello Vue"
-    };
+    return {};
   }
 };
 </script>
 
 <style>
-.login{
-  display: inline-block;
-  width: 400px;
+.wrap{
+  height: 100vh;
+  background-color: #f8f8f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.login .card{
+.card{
+  width: 360px;
   padding: 15px 30px;
+  box-shadow: 0 30px 30px -15px #ccc;
 }
-.login .avatar{
+.avatar{
   margin-bottom: 20px;
+}
+.login-tip{
+  font-size: 10px;
+  text-align: center;
+  color: #c3c3c3;
 }
 </style>

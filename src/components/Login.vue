@@ -1,50 +1,54 @@
 <template>
   <div class="wrap">
-    <Card class="card" :class="{active: status}">
-      <Avatar class="login-avatar" icon="person" size="large" />
-      <Form class="login">
-        <FormItem prop="user">
-          <Input type="text" placeholder="账号">
-            <Icon type="person" slot="prepend" size="16"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" placeholder="密码">
-            <Icon type="locked" slot="prepend" size="14"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" long>登录</Button>
-        </FormItem>
-      </Form>
-      <div class="card-tip">
-        <!-- <Alert type="error" show-icon>错误次数超过3次&emsp;<router-link to="/registe">注册</router-link></Alert> -->
-      </div>
-    </Card>
-    <Card class="card" :class="{active: !status}">
-      <Avatar class="registe-avatar" icon="person" size="large" />
-      <Form class="registe">
-        <FormItem prop="user">
-          <Input type="text" placeholder="账号">
-            <Icon type="person" slot="prepend" size="16"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" placeholder="密码">
-            <Icon type="locked" slot="prepend" size="14"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input type="password" placeholder="确认密码">
-            <Icon type="locked" slot="prepend" size="14"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" long>注册</Button>
-        </FormItem>
-      </Form>
-      <div class="card-tip"></div>
-    </Card>
+    <transition name="fade">
+      <keep-alive>
+        <Card class="card" v-if="status">
+          <Avatar class="login-avatar" icon="person" size="large" />
+          <Form class="login">
+            <FormItem prop="user">
+              <Input type="text" placeholder="账号">
+                <Icon type="person" slot="prepend" size="16"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input type="password" placeholder="密码">
+                <Icon type="locked" slot="prepend" size="14"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem>
+              <Button type="primary" long>登录</Button>
+            </FormItem>
+          </Form>
+          <div class="card-tip">
+            <!-- <Alert type="error" show-icon>错误次数超过3次&emsp;<router-link to="/registe">注册</router-link></Alert> -->
+          </div>
+        </Card>
+        <Card class="card" v-else>
+          <Avatar class="registe-avatar" icon="person" size="large" />
+          <Form class="registe">
+            <FormItem prop="user">
+              <Input type="text" placeholder="账号">
+                <Icon type="person" slot="prepend" size="16"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input type="password" placeholder="密码">
+                <Icon type="locked" slot="prepend" size="14"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem prop="password">
+              <Input type="password" placeholder="确认密码">
+                <Icon type="locked" slot="prepend" size="14"></Icon>
+              </Input>
+            </FormItem>
+            <FormItem>
+              <Button type="primary" long>注册</Button>
+            </FormItem>
+          </Form>
+          <div class="card-tip"></div>
+        </Card>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -69,8 +73,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
+.fade-enter-active, .fade-leave-active{
+  transition: opacity .5s;
+}
 .card{
-  display: none;
   background-color: rgba(250,250,250,.93);
   width: 360px;
   text-align: center;

@@ -9,16 +9,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home
     }, {
       path: "/login",
-      name: "Login",
+      name: "login",
       props: {status: true},
       component: Login
     }, {
       path: "/registe",
-      name: "Registe",
+      name: "registe",
       props: {status: false},
       component: Login
     }

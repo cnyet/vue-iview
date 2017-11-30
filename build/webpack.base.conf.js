@@ -2,12 +2,12 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')    //将一个包或束提取到一个单独的文件
 const isProduction = process.env.NODE_ENV === 'production'
 // 获取绝对路径
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
 module.exports = {
   //入口文件
   entry: {
@@ -65,7 +65,6 @@ module.exports = {
             }
           }
         ],
-
       },
       {
         test: /\.js$/,

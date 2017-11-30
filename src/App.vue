@@ -1,12 +1,31 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition name="fade">
+      <keep-alive>
+        <!-- 路由出口,路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  //组件开始挂载时
+  mounted: function(){
+
+  },
+  methods: {
+    getUserInfo(){
+      console.log(this);
+      this.userInfo = {
+        name: "John",
+        uid: "001",
+        avatar: ""
+      };
+    }
+  }
 };
 </script>
 
@@ -16,5 +35,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+.fade-enter-active, .fade-leave-active{
+  transition: opacity .5s;
 }
 </style>

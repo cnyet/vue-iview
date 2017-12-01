@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/components/Home';
 import Login from '@/components/Login';
 import Error404 from '@/components/404';
+import UserInfo from "@/components/UserInfo";
 
 Vue.use(Router);
 
@@ -25,6 +26,10 @@ export default new Router({
       name: "registe",
       props: {status: false},
       component: Login
+    }, {
+      path: "/userInfo",
+      name: "user",
+      component: UserInfo
     }
   ]
 });

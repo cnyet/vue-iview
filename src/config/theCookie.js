@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   methods: {
     /* 设置cookie */
     setCookie (name, value, expires){

@@ -12,19 +12,18 @@
 <script>
 export default {
   name: 'app',
+  data(){
+    return {
+      isLogin: false
+
+    };
+  },
   //组件开始挂载时
   mounted: function(){
 
   },
   methods: {
-    getUserInfo(){
-      console.log(this);
-      this.userInfo = {
-        name: "John",
-        uid: "001",
-        avatar: ""
-      };
-    }
+
   }
 };
 </script>
@@ -37,6 +36,6 @@ export default {
   color: #2c3e50;
 }
 .fade-enter-active, .fade-leave-active{
-  transition: opacity .5s;
+  transition: opacity .2s;
 }
 </style>

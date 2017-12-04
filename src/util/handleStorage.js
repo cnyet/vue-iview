@@ -29,6 +29,26 @@ export default {
       if (cval != null){
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
       }
+    },
+    /* 保存session到sessionStorage */
+    saveSession(key, value) {
+      if(typeof (Storage) !== "undefined"){
+        sessionStorage.setItem(key, value);
+      }else{
+        console.error("your browser doesn't support localstorage and sessionstorage.");
+      }
+    },
+    /* 获取sessionStorage */
+    getSession(key) {
+      return sessionStorage.getItem(key);
+    },
+    /* 删除单个sessionStorage */
+    delSession(key) {
+      sessionStorage.removeItem(key);
+    },
+    /* 删除所有sessionStorage */
+    clearSession() {
+      sessionStorage.clear();
     }
   }
 };

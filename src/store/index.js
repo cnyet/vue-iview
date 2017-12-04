@@ -8,16 +8,15 @@ export default new Vuex.Store({
   //状态
   state: {
     domain: "http://test.example.com",
-    userInfo: {
-      name: null,
-      uid: null,
-      avatar: null
+    session: {
+      account: null,
+      uid: null
     }
   },
   //突变
   mutations: {
     updateUserInfo (state, newUserInfo){
-      state.userInfo = newUserInfo;
+      state.session = newUserInfo;
     }
   }
 });

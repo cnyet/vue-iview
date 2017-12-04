@@ -2,27 +2,34 @@
   <div class="user">
     <div class="wrap">
       <Card>
-        <Avatar :src="$store.state.userInfo.avatar" size="large"></Avatar>
+        <Avatar class="login-avatar" icon="person" size="large" />
         <h2>
-          <span>{{$store.state.userInfo.name}}</span> &bull; <span>{{$store.state.userInfo.uid}}</span>
+          <span>{{user.account}}</span> &bull; <span>{{user.uid}}</span>
         </h2>
+        <Button type="primary" @click="logout">退出</Button>
       </Card>
     </div>
   </div>
 </template>
 
 <script>
-import theCookie from "../config/theCookie";
+import handleStorage from "../util/handleStorage";
+import mixin from "../util/mixin";
 export default {
   name: "user",
-  mixins: [theCookie],
+  mixins: [handleStorage, mixin],
+  computed: {
+    user() {
+      return this.$store.state.session;
+    }
+  },
   methods: {
     logout(){
       this.delCookie("session");
     }
   },
   created () {
-    console.log(this.$store.state.userInfo);
+
   }
 };
 </script>

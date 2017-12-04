@@ -29,6 +29,7 @@ export default new Router({
     }, {
       path: "/userInfo",
       name: "user",
+      meta: { requiresAuth: true },
       component: UserInfo
     }
   ]

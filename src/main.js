@@ -9,7 +9,7 @@ import iView from "iview";
 import App from './App';
 import router from './router';
 import "iview/dist/styles/iview.css";
-import theCookie from "./config/theCookie";
+import handleStorage from "./util/handleStorage";
 import store from "./store";
 
 Vue.use(iView);
@@ -24,9 +24,22 @@ Vue.config.productionTip = false;
  * afterEach：在每次路由切换成功进入激活阶段时被调用
  * next函数主要负责将控制权交给下一个中间件
  */
+//全局导航守卫中检查元字段
+//$route.matched是所有路由记录数组
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
-  next();
+  if(to.matched.some(record => record.meta.requiresAuth)){
+    if(!handleStorage.methods.getCookie("session")){
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }    //查询参数
+      });
+    }else{
+      next();
+    }
+  }else {
+    next();
+  }
 });
 
 router.afterEach((to, from, next) => {
@@ -36,18 +49,18 @@ router.afterEach((to, from, next) => {
 
 new Vue({
   el: "#app",
-  mixins: [theCookie],
+  mixins: [handleStorage],
   router,
   store,
   // template: '<App/>',
   // components: { App }
   render: h => h(App),
   watch: {
-    "$route": function(to, from){
+    /*"$route": function(to, from){
       if(to.name !== "registe" && to.name !== "login"){
         this.checkLogin();
       }
-    }
+    }*/
   },
   methods: {
     /* 检查是否存在session */
@@ -60,6 +73,6 @@ new Vue({
   },
   //vue实例被创建之后执行
   created: function(){
-    this.checkLogin();
+    // this.checkLogin();
   }
 });

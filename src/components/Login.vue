@@ -48,12 +48,12 @@
 </template>
 
 <script>
-import theCookie from "../config/theCookie";
-import image from "../images/avatar.jpg";
+import handleStorage from "../util/handleStorage";
+import mixin from "../util/mixin";
 export default {
   name: "home",
   props: ["status"],
-  mixins: [theCookie],
+  mixins: [handleStorage, mixin],
   data () {
     const validPwd = (rule, value, callback, source, options) => {
       if(value === ""){
@@ -123,7 +123,7 @@ export default {
         if(valid && this.loginForm.account==="admin" && this.loginForm.password==="123"){
           this.$Message.success("登录成功!");
           this.isLogin = true;
-          this.setCookie("session", this.loginForm.account, 5);
+          this.setCookie("session", this.loginForm.account, 1);
           //重置表单
           // this.$refs['loginForm'].resetFields();
           this.getUserInfo();
@@ -146,11 +146,12 @@ export default {
     },
     getUserInfo(){
       const userInfo = {
-        name: "John",
-        uid: "001",
-        avatar: image
+        account: "admin",
+        uid: "001"
       };
       this.$store.commit("updateUserInfo", userInfo);
+      this.saveSession("uid", "001");
+      this.saveSession("user", "admin");
     },
   },
   created: function(){
@@ -162,7 +163,7 @@ export default {
 <style scoped>
 .wrap{
   height: 100vh;
-  background: #f8f8f9 url("../images/bg.jpg") no-repeat;
+  background: #f8f8f9 url("../assets/bg.jpg") no-repeat;
   background-size: cover;
   display: flex;
   justify-content: center;

@@ -18,5 +18,10 @@ export default new Vuex.Store({
     updateUserInfo (state, newUserInfo){
       state.session = newUserInfo;
     }
+  },
+  actions: {
+    updateUserInfo (context) {
+      context.commit("updateUserInfo");
+    }
   }
 });

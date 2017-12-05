@@ -9,7 +9,7 @@ import iView from "iview";
 import App from './App';
 import router from './router';
 import "iview/dist/styles/iview.css";
-import handleStorage from "./util/handleStorage";
+import handleCookie from "./util/handleCookie";
 import store from "./store";
 
 Vue.use(iView);
@@ -29,7 +29,7 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!handleStorage.methods.getCookie("session")){
+    if(!sessionStorage.getItem("uid")){
       next({
         path: "/login",
         query: { redirect: to.fullPath }    //查询参数
@@ -49,7 +49,6 @@ router.afterEach((to, from, next) => {
 
 new Vue({
   el: "#app",
-  mixins: [handleStorage],
   router,
   store,
   // template: '<App/>',
@@ -65,8 +64,7 @@ new Vue({
   methods: {
     /* 检查是否存在session */
     checkLogin: function(){
-      console.log(this.getCookie("session"));
-      if(!this.getCookie("session")){
+      if(!handleCookie.getCookie("session")){
         this.$router.push("/login");
       }
     }

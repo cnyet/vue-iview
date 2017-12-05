@@ -48,12 +48,12 @@
 </template>
 
 <script>
-import handleStorage from "../util/handleStorage";
+import handleCookie from "../util/handleCookie";
 import mixin from "../util/mixin";
 export default {
   name: "home",
   props: ["status"],
-  mixins: [handleStorage, mixin],
+  mixins: [mixin],
   data () {
     const validPwd = (rule, value, callback, source, options) => {
       if(value === ""){
@@ -123,7 +123,7 @@ export default {
         if(valid && this.loginForm.account==="admin" && this.loginForm.password==="123"){
           this.$Message.success("登录成功!");
           this.isLogin = true;
-          this.setCookie("session", this.loginForm.account, 1);
+          // handleCookie.setCookie("session", this.loginForm.account, 1);
           //重置表单
           // this.$refs['loginForm'].resetFields();
           this.getUserInfo();
@@ -150,12 +150,16 @@ export default {
         uid: "001"
       };
       this.$store.commit("updateUserInfo", userInfo);
-      this.saveSession("uid", "001");
-      this.saveSession("user", "admin");
-    },
+      if(typeof (Storage) !== "undefined"){
+        sessionStorage.setItem("uid", "001");
+        sessionStorage.setItem("user", "admin");
+      }else{
+        console.error("your browser doesn't support localstorage and sessionstorage.");
+      }
+    }
   },
   created: function(){
-    console.log(this.getCookie("session"));
+    console.log(handleCookie.getCookie("session"));
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <Card>
         <Avatar class="login-avatar" icon="person" size="large" />
         <h2>
-          <span>{{user.account}}</span> &bull; <span>{{user.uid}}</span>
+          <span>{{session.account}}</span> &bull; <span>{{session.uid}}</span>
         </h2>
         <Button type="primary" @click="logout">退出</Button>
       </Card>
@@ -13,19 +13,20 @@
 </template>
 
 <script>
-import handleStorage from "../util/handleStorage";
 import mixin from "../util/mixin";
 export default {
   name: "user",
-  mixins: [handleStorage, mixin],
+  mixins: [mixin],
   computed: {
-    user() {
+/*    user() {
       return this.$store.state.session;
-    }
+    }*/
   },
   methods: {
     logout(){
-      this.delCookie("session");
+      // handleCookie.delCookie("session");
+      sessionStorage.removeItem("uid");
+      this.$router.push("/login");
     }
   },
   created () {

@@ -54,13 +54,6 @@ new Vue({
   // template: '<App/>',
   // components: { App }
   render: h => h(App),
-  watch: {
-    /*"$route": function(to, from){
-      if(to.name !== "registe" && to.name !== "login"){
-        this.checkLogin();
-      }
-    }*/
-  },
   methods: {
     /* 检查是否存在session */
     checkLogin: function(){

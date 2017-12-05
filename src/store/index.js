@@ -15,13 +15,13 @@ export default new Vuex.Store({
   },
   //突变
   mutations: {
-    updateUserInfo (state, newUserInfo){
+    updateSession (state, newUserInfo){
       state.session = newUserInfo;
     }
   },
   actions: {
-    updateUserInfo (context) {
-      context.commit("updateUserInfo");
+    updateSession (context) {
+      context.commit("updateSession");
     }
   }
 });

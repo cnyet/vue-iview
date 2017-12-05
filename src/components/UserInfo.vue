@@ -17,11 +17,6 @@ import mixin from "../util/mixin";
 export default {
   name: "user",
   mixins: [mixin],
-  computed: {
-/*    user() {
-      return this.$store.state.session;
-    }*/
-  },
   methods: {
     logout(){
       // handleCookie.delCookie("session");

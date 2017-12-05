@@ -10,7 +10,7 @@ export default {
         account: sessionStorage.getItem("user")
       };
       if(!state.session.uid){
-        this.$store.dispatch("updateUserInfo", session);
+        this.$store.dispatch("updateSession", session);
       }
       return session;
     }

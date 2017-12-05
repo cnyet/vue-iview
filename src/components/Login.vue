@@ -149,7 +149,7 @@ export default {
         account: "admin",
         uid: "001"
       };
-      this.$store.commit("updateUserInfo", userInfo);
+      this.$store.commit("updateSession", userInfo);
       if(typeof (Storage) !== "undefined"){
         sessionStorage.setItem("uid", "001");
         sessionStorage.setItem("user", "admin");

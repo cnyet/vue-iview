@@ -172,23 +172,5 @@ export default {
       }
     }
   }
-
-  .footer{
-    padding: 0 80px;
-    margin: 25px auto;
-    &:after{
-      content: "";
-      display: table;
-      clear: both;
-    }
-    .foot-left{
-      width: 200px;
-      float: left;
-    }
-    .foot-right{
-      float: right;
-    }
-  }
-
 }
 </style>

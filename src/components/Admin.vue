@@ -16,7 +16,6 @@
             <span class="layout-text">option 2</span>
           </MenuItem>
           <MenuItem name="1-3">
-            <Icon type="ios-analytics"></Icon>
             <span class="layout-text">option 3</span>
           </MenuItem>
         </Submenu>
@@ -116,6 +115,13 @@ export default {
         this.shrink = true;
       }
     }
+  },
+  created(){
+    this.$http.get("http://rap2api.taobao.org/app/mock/1484/GET//example/1512725371915").then(function(response){
+      console.log(response);
+    }).catch(function(error){
+      console.log(error);
+    });
   }
 };
 </script>

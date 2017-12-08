@@ -20,6 +20,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //context具有与state相同方法和属性
     updateSession (context) {
       context.commit("updateSession");
     }

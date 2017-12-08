@@ -6,12 +6,13 @@ import Vue from 'vue';
  *IE10可以用-ms-touch-action: manipulation，IE11 + 你可以设置 touch-action: manipulation，来禁用通过双击放大某些元素
  */
 import iView from "iview";
+import axios from "axios";      //提供http请求
 import App from './App';
 import router from './router';
 import "iview/dist/styles/iview.css";
 import handleCookie from "./util/handleCookie";
 import store from "./store";
-
+// 如果使用模块化机制编程，要调用 Vue.use()安装 Vue插件
 Vue.use(iView);
 Vue.config.productionTip = false;
 
@@ -46,11 +47,21 @@ router.afterEach((to, from, next) => {
   iView.LoadingBar.finish();
   window.scrollTo(0, 0);
 });
-
+/*
+* 设置全局的 axios 默认值
+* `baseURL` 将自动加在 `url` 前面，除非 `url` 是一个绝对 URL
+* 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
+* `headers` 是即将被发送的自定义请求头
+ */
+// axios.defaults.baseURL = "http://localhost:3100";
+// axios.defaults.headers.common['Authorization'] = "AUTH_TOKEN";
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+//全局添加 Vue 实例方法
+Vue.prototype.$http = axios;
 new Vue({
   el: "#app",
-  router,
-  store,
+  router,       //通过 router 配置参数注入路由,让整个应用都有路由功能
+  store,        //把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
   // template: '<App/>',
   // components: { App }
   render: h => h(App),

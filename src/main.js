@@ -53,8 +53,8 @@ router.afterEach((to, from, next) => {
 * 它可以通过设置一个 `baseURL` 便于为 axios 实例的方法传递相对 URL
 * `headers` 是即将被发送的自定义请求头
  */
-// axios.defaults.baseURL = "http://localhost:3100";
-// axios.defaults.headers.common['Authorization'] = "AUTH_TOKEN";
+axios.defaults.baseURL = "http://rap2api.taobao.org/app/mock/1484";
+axios.defaults.headers.common['Authorization'] = "AUTH_TOKEN";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //全局添加 Vue 实例方法
 Vue.prototype.$http = axios;

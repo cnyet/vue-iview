@@ -117,7 +117,7 @@ export default {
     }
   },
   created(){
-    this.$http.get("http://rap2api.taobao.org/app/mock/1484/GET//example/1512725371915").then(function(response){
+    this.$http.get("/GET/userLists").then(function(response){
       console.log(response);
     }).catch(function(error){
       console.log(error);

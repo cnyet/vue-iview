@@ -2,54 +2,7 @@
 <div class="layout" :class="{'layout-hide-text': shrink}">
   <Row type="flex">
     <Col class="layout-menu-left">
-      <Menu active-name="1" theme="dark" width="auto">
-        <div class="layout-logo-left"></div>
-        <Submenu name="1">
-          <template slot="title">
-            <Icon type="ios-navigate"></Icon>
-            <span class="layout-text">item 1</span>
-          </template>
-          <MenuItem name="1-1">
-            <span class="layout-text">option 1</span>
-          </MenuItem>
-          <MenuItem name="1-2">
-            <span class="layout-text">option 2</span>
-          </MenuItem>
-          <MenuItem name="1-3">
-            <span class="layout-text">option 3</span>
-          </MenuItem>
-        </Submenu>
-        <Submenu name="2">
-          <template slot="title">
-            <Icon type="ios-keypad"></Icon>
-            <span class="layout-text">item 2</span>
-          </template>
-          <MenuItem name="2-1">
-            <span class="layout-text">option 1</span>
-          </MenuItem>
-          <MenuItem name="2-2">
-            <span class="layout-text">option 2</span>
-          </MenuItem>
-          <MenuItem name="2-3">
-            <span class="layout-text">option 3</span>
-          </MenuItem>
-        </Submenu>
-        <Submenu name="3">
-          <template slot="title">
-            <Icon type="ios-analytics"></Icon>
-            <span class="layout-text">item 3</span>
-          </template>
-          <MenuItem name="3-1">
-            <span class="layout-text">option 1</span>
-          </MenuItem>
-          <MenuItem name="3-2">
-            <span class="layout-text">option 2</span>
-          </MenuItem>
-          <MenuItem name="3-3">
-            <span class="layout-text">option 3</span>
-          </MenuItem>
-        </Submenu>
-      </Menu>
+      <menu-lists></menu-lists>
     </Col>
     <Col class="layout-menu-right">
       <div class="layout-header">
@@ -59,7 +12,9 @@
           </Button>
         </div>
         <div class="header-panel">
-          <div class="header-panel-icon"></div>
+          <div class="header-panel-icon">
+            <message-tip v-model="mesCount"></message-tip>
+          </div>
           <div class="header-panel-user">
             <Dropdown class="header-dropdown" trigger="click">
               <a href="javascript:void(0)">
@@ -82,11 +37,13 @@
         </div>
       </div>
       <div class="tags-wrap">
-        <Tag type="dot" color="blue">首页</Tag>
+        <tag-lists :pageTagList="pageTagList"></tag-lists>
       </div>
       <div class="layout-content">
         <div class="layout-content-wrap">
-
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </div>
       </div>
     </Col>
@@ -96,16 +53,32 @@
 
 <script>
 import mixin from "../util/mixin";
+import messageTip from "./admin-blocks/message-tip";
+import menuLists from "./admin-blocks/menu-lists";
+import tagLists from "./admin-blocks/tag-lists";
 import imgSrc from "../assets/avatar.jpg";
 export default {
   name: "admin",
   mixins: [mixin],
+  components: {
+    messageTip,
+    menuLists,
+    tagLists
+  },
   data(){
     const img = new Image().src=imgSrc;
     return {
       shrink: false,
-      avatarSrc: img
+      avatarSrc: img,
+      dataSource: null,
+      mesCount: 3,
+
     };
+  },
+  computed: {
+    pageTagList() {
+      return this.$store.state.openedTags;
+    }
   },
   methods: {
     toggleClick(){
@@ -117,8 +90,12 @@ export default {
     }
   },
   created(){
-    this.$http.get("/GET/userLists").then(function(response){
-      console.log(response);
+    this.$http.get("/GET/userLists").then(function(res){
+      if(res.readyState === 4 && res.status === 200){
+        this.dataSource = res.data;
+      }
+      console.log(res.data);
+
     }).catch(function(error){
       console.log(error);
     });
@@ -145,13 +122,6 @@ export default {
     transition: width .3s;
     background: #464c5b;
     transition: width .2s ease-in-out;
-    .layout-logo-left{
-      width: 90%;
-      height: 30px;
-      background: #5b6270;
-      border-radius: 3px;
-      margin: 15px auto;
-    }
   }
   &-menu-right{
     position: absolute;
@@ -175,20 +145,22 @@ export default {
       }
       .header-breadcrumb{
         line-height: 30px;
-        margin-right: 300px;
+        margin-right: 220px;
         padding: 15px 15px;
       }
       .header-panel{
         height: 100%;
-        width: 300px;
+        width: 220px;
         float: right;
         overflow: hidden;
         .header-panel-icon{
-
+          float: left;
+          width: 40%;
+          text-align: center;
+          height: 60px;
         }
         .header-panel-user{
-          width: 50%;
-          height: 60px;
+          width: 60%;
           font-size: 14px;
           padding: 14px 15px;
           text-align: right;

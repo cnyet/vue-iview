@@ -55,7 +55,6 @@ router.afterEach((to, from, next) => {
  */
 axios.defaults.baseURL = "http://rap2api.taobao.org/app/mock/1484";
 axios.defaults.headers.common['Authorization'] = "AUTH_TOKEN";
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //全局添加 Vue 实例方法
 Vue.prototype.$http = axios;
 new Vue({

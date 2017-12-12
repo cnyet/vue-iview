@@ -7,16 +7,32 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   //状态
   state: {
-    domain: "http://test.example.com",
+    domain: "http://rap2api.taobao.org/",
     session: {
       account: null,
       uid: null
-    }
+    },
+    openedTags: [{
+      title: "首页",
+      name: "admin",
+      path: "admin"
+    }]
   },
   //突变
   mutations: {
     updateSession (state, newUserInfo){
       state.session = newUserInfo;
+    },
+    updateOpenedTags (state, tags){
+      let hasTheName = false;
+      state.openedTags.forEach(item => {
+        if(item.name === tags.name){
+          hasTheName = true;
+        }
+      });
+      if(!hasTheName){
+        state.openedTags.push(tags);
+      }
     }
   },
   actions: {

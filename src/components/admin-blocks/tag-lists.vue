@@ -14,31 +14,32 @@
 </template>
 
 <script>
-  export default {
-    name: "tagLists",
-    props: {
-      pageTagList: Array
-    },
-    data(){
-      return {
-        currentPageName: this.$route.name
-      };
-    },
-    watch: {
-      "$route" (to, from){
-        this.currentPageName = to.name;
-        this.$nextTick(() => {
+import mixin from "../../util/mixin";
+export default {
+  name: "tagLists",
+  mixins: [mixin],
+  props: {
+    pageTagList: Array
+  },
+  data(){
+    return {
+      currentPageName: this.$route.name
+    };
+  },
+  watch: {
+    "$route" (to, from){
+      this.currentPageName = to.name;
+      this.$nextTick(() => {
 
-        });
-      }
-    },
-    methods: {
-      closeTag(){
-
-      }
-    },
-    created(){
-      console.log(this.$route.name);
+      });
     }
-  };
+  },
+  methods: {
+    closeTag(){
+
+    }
+  },
+  created(){
+  }
+};
 </script>

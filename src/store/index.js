@@ -16,7 +16,8 @@ export default new Vuex.Store({
       title: "首页",
       name: "admin",
       path: "admin"
-    }]
+    }],
+    currentPath: null
   },
   //突变
   mutations: {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
       if(!hasTheName){
         state.openedTags.push(tags);
       }
+    },
+    updateCurrentPath(state, path){
+      state.currentPath = path;
     }
   },
   actions: {

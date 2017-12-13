@@ -13,6 +13,17 @@ export default {
         this.$store.dispatch("updateSession", session);
       }
       return session;
+    },
+    currentPath : "currentPath",
+    openedTags: "openedTags"
+  }),
+  watch: {
+    "$route" (to, from){
+      const pagePath = to.fullPath;
+      const currentPathArr = pagePath.split("/").filter(item => item!=='');
+      console.log(currentPathArr);
+      this.$store.commit("updateCurrentPath", pagePath);
+      this.$store.commit("updateOpenedTags", currentPathArr);
     }
-  })
+  },
 };

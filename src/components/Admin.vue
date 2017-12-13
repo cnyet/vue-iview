@@ -2,7 +2,7 @@
 <div class="layout" :class="{'layout-hide-text': shrink}">
   <Row type="flex">
     <Col class="layout-menu-left">
-      <menu-lists></menu-lists>
+      <menu-lists :shrink="shrink"></menu-lists>
     </Col>
     <Col class="layout-menu-right">
       <div class="layout-header">
@@ -29,15 +29,13 @@
           </div>
         </div>
         <div class="header-breadcrumb">
-          <Breadcrumb>
-            <BreadcrumbItem href="#">index</BreadcrumbItem>
-            <BreadcrumbItem href="#">apps</BreadcrumbItem>
-            <BreadcrumbItem href="#">app</BreadcrumbItem>
+          <Breadcrumb ref="breadcrub">
+            <BreadcrumbItem v-for="item in openedTags" :key="item.name" :path="item.path" href="#">{{item.title}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
       <div class="tags-wrap">
-        <tag-lists :pageTagList="pageTagList"></tag-lists>
+        <tag-lists :pageTagList="openedTags"></tag-lists>
       </div>
       <div class="layout-content">
         <div class="layout-content-wrap">
@@ -63,7 +61,7 @@ export default {
   components: {
     messageTip,
     menuLists,
-    tagLists
+    tagLists,
   },
   data(){
     const img = new Image().src=imgSrc;
@@ -76,9 +74,7 @@ export default {
     };
   },
   computed: {
-    pageTagList() {
-      return this.$store.state.openedTags;
-    }
+
   },
   methods: {
     toggleClick(){
@@ -90,11 +86,11 @@ export default {
     }
   },
   created(){
+    console.log(this.currentPathArr);
     this.$http.get("/GET/userLists").then(function(res){
       if(res.readyState === 4 && res.status === 200){
         this.dataSource = res.data;
       }
-      console.log(res.data);
 
     }).catch(function(error){
       console.log(error);
@@ -199,14 +195,11 @@ export default {
   }
 }
 .layout-hide-text {
-  .layout-text{
-    display: none;
-  }
   .layout-menu-left{
-    width: 80px;
+    width: 60px;
   }
   .layout-menu-right{
-    left: 80px;
+    left: 60px;
   }
 }
 </style>

@@ -7,10 +7,19 @@
 </template>
 
 <script>
-  export default {
-    name: "authority",
-    porps: {
+export default {
+  name: "authority",
+  porps: { },
+  data(){
+    return {
 
-    }
-  };
+    };
+  },
+  methods: {
+
+  },
+  created() {
+
+  }
+};
 </script>

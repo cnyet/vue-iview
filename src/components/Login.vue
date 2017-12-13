@@ -9,7 +9,7 @@
           </Input>
         </FormItem>
         <FormItem prop="password" key="login-password">
-          <Input type="password" placeholder="密码" v-model="loginForm.password">
+          <Input type="password" placeholder="密码" v-model="loginForm.password" @keyup.enter.native="login">
             <Icon type="locked" slot="prepend" size="14"></Icon>
           </Input>
         </FormItem>

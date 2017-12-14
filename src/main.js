@@ -30,10 +30,10 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!sessionStorage.getItem("uid")){
+    if(!sessionStorage.getItem("isLogin")){
       next({
         path: "/login",
-        query: { redirect: to.fullPath }    //查询参数
+        query: {redirect:to.fullPath}    //查询参数
       });
     }else{
       next();
@@ -42,7 +42,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
 router.afterEach((to, from, next) => {
   iView.LoadingBar.finish();
   window.scrollTo(0, 0);

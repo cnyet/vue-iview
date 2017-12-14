@@ -12,19 +12,24 @@ export default new Vuex.Store({
       account: null,
       uid: null
     },
+    isLogin: false,
     openedTags: [{
       title: "首页",
       name: "admin",
-      path: "admin"
+      path: "/admin"
     }],
-    currentPath: null
+    currentTag: "",
+    currentPath: []
   },
   //突变
   mutations: {
     updateSession (state, newUserInfo){
       state.session = newUserInfo;
     },
-    updateOpenedTags (state, tags){
+    updateLogin(state, status){
+      state.isLogin = status;
+    },
+    addOpenedTags (state, tags){
       let hasTheName = false;
       state.openedTags.forEach(item => {
         if(item.name === tags.name){
@@ -35,8 +40,18 @@ export default new Vuex.Store({
         state.openedTags.push(tags);
       }
     },
+    deleteOpenedTags(state, name){
+      state.openedTags.forEach((item, index) => {
+        if(item.name === name){
+          state.openedTags.splice(index, 1);
+        }
+      });
+    },
     updateCurrentPath(state, path){
       state.currentPath = path;
+    },
+    updateCurrentTag(state, name){
+      state.currentTag = name;
     }
   },
   actions: {

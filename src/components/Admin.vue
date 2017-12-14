@@ -16,21 +16,24 @@
             <message-tip v-model="mesCount"></message-tip>
           </div>
           <div class="header-panel-user">
-            <Dropdown class="header-dropdown" trigger="click">
+            <Dropdown transfer class="header-dropdown" trigger="click" @on-click="handleDropdown">
               <a href="javascript:void(0)">
                   {{session.account}}<Icon type="arrow-down-b"></Icon>
               </a>
               <DropdownMenu slot="list">
-                  <DropdownItem>个人中心</DropdownItem>
-                  <DropdownItem>退出登录</DropdownItem>
+                  <DropdownItem name="userCenter">个人中心</DropdownItem>
+                  <DropdownItem name="logout">退出登录</DropdownItem>
               </DropdownMenu>
             </Dropdown>
             <Avatar class="avatar" :src="avatarSrc"></Avatar>
           </div>
         </div>
         <div class="header-breadcrumb">
-          <Breadcrumb ref="breadcrub">
-            <BreadcrumbItem v-for="item in openedTags" :key="item.name" :path="item.path" href="#">{{item.title}}</BreadcrumbItem>
+          <Breadcrumb>
+            <BreadcrumbItem
+              v-for="(item, index) in openedTags"
+              :key="item.name"
+              :href="index!==(openedTags.length-1) ? item.path:''">{{item.title}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
@@ -38,11 +41,9 @@
         <tag-lists :pageTagList="openedTags"></tag-lists>
       </div>
       <div class="layout-content">
-        <div class="layout-content-wrap">
-          <keep-alive>
-            <router-view></router-view>
-          </keep-alive>
-        </div>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
       </div>
     </Col>
   </Row>
@@ -83,10 +84,22 @@ export default {
       }else{
         this.shrink = true;
       }
+    },
+    handleDropdown(name){
+      if(name === "userCenter"){
+        this.$router.push({
+          name: "userCenter"
+        });
+      }else if(name === "logout"){
+        sessionStorage.removeItem("isLogin");
+        this.$store.commit("updateLogin", false);
+        this.$store.commit("updateSession", null);
+        this.$router.push("/login");
+      }
     }
   },
   created(){
-    console.log(this.currentPathArr);
+    console.log(this.openedTags);
     this.$http.get("/GET/userLists").then(function(res){
       if(res.readyState === 4 && res.status === 200){
         this.dataSource = res.data;
@@ -109,7 +122,7 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   &-menu-left{
-    width: 280px;
+    width: 200px;
     height: 100%;
     position: fixed;
     top: 0;
@@ -124,7 +137,7 @@ export default {
     top: 0;
     bottom: 0;
     right: 0;
-    left: 280px;
+    left: 200px;
     .layout-header{
       height: 60px;
       padding-left: 60px;
@@ -171,22 +184,19 @@ export default {
       }
     }
     .tags-wrap{
-      padding: 5px 15px 0;
-      height: 40px;
+      padding: 5px 15px;
+      height: 44px;
+      box-shadow: 0 1px 1px 1px rgba(128,128,128,.1);
     }
     .layout-content{
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      top: 100px;
-      margin: 10px 15px;
+      top: 106px;
+      margin: 8px 15px;
       border-radius: 4px;
       overflow: auto;
-      &-wrap{
-        background-color: #fff;
-        height: 100%;
-      }
     }
     .layout-copyright{
       font-size: 14px;

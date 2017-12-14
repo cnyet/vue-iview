@@ -76,7 +76,6 @@ export default {
       }
     };
     return {
-      isLogin: false,
       errorCount: 0,
       loginForm: {
         account: "",
@@ -119,15 +118,13 @@ export default {
   methods: {
     login(){
       this.$refs['loginForm'].validate((valid) => {
-        console.log(valid);
         if(valid && this.loginForm.account==="admin" && this.loginForm.password==="123"){
           this.$Message.success("登录成功!");
-          this.isLogin = true;
           // handleCookie.setCookie("session", this.loginForm.account, 1);
           //重置表单
           // this.$refs['loginForm'].resetFields();
           this.getUserInfo();
-          this.$router.push("/userInfo");
+          this.$router.push("/admin");
         }else{
           this.errorCount ++;
           this.$Message.error("登录失败!");
@@ -149,10 +146,10 @@ export default {
         account: "admin",
         uid: "001"
       };
+      this.$store.commit("updateLogin", true);
       this.$store.commit("updateSession", userInfo);
       if(typeof (Storage) !== "undefined"){
-        sessionStorage.setItem("uid", "001");
-        sessionStorage.setItem("user", "admin");
+        sessionStorage.setItem("isLogin", true);
       }else{
         console.error("your browser doesn't support localstorage and sessionstorage.");
       }

@@ -1,4 +1,8 @@
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .auth-container{
+
+  }
+</style>
 
 <template>
   <div class="auth-container">

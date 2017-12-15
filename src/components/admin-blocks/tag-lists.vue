@@ -4,35 +4,29 @@
   <div class="tag-container">
     <Tag
         type="dot"
-        v-for="(item, index) in pageTagList"
+        v-for="(item, index) in openedTags"
         :key="item.name"
         :name="item.title"
         :closable="item.name==='admin'?false:true"
         @on-close="closeTag"
-        :color="item.name===currentPageName?'blue':'default'">{{item.title}}</Tag>
+        :color="item.name===currentTag?'blue':'default'">{{item.title}}</Tag>
   </div>
 </template>
 
 <script>
-import mixin from "../../util/mixin";
 export default {
   name: "tagLists",
-  mixins: [mixin],
   props: {
-    pageTagList: Array
+    openedTags: Array,
+    currentTag: {
+      type: String,
+      default: "admin"
+    }
   },
   data(){
     return {
-      currentPageName: this.$route.name
-    };
-  },
-  watch: {
-    "$route" (to, from){
-      this.currentPageName = to.name;
-      this.$nextTick(() => {
 
-      });
-    }
+    };
   },
   methods: {
     closeTag(){
@@ -40,6 +34,7 @@ export default {
     }
   },
   created(){
+    console.log(this.openedTags, this.currentTag);
   }
 };
 </script>

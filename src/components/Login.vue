@@ -49,11 +49,9 @@
 
 <script>
 import handleCookie from "../util/handleCookie";
-import mixin from "../util/mixin";
 export default {
   name: "home",
   props: ["status"],
-  mixins: [mixin],
   data () {
     const validPwd = (rule, value, callback, source, options) => {
       if(value === ""){
@@ -120,16 +118,15 @@ export default {
       this.$refs['loginForm'].validate((valid) => {
         if(valid && this.loginForm.account==="admin" && this.loginForm.password==="123"){
           this.$Message.success("登录成功!");
-          // handleCookie.setCookie("session", this.loginForm.account, 1);
-          //重置表单
-          // this.$refs['loginForm'].resetFields();
-          this.getUserInfo();
+          this.setUserInfo();
           this.$router.push("/admin");
         }else{
           this.errorCount ++;
           this.$Message.error("登录失败!");
         }
       });
+      //重置表单
+      this.$refs.loginForm.resetFields();
     },
     registe(){
       this.$refs['registeForm'].validate((valid) => {
@@ -141,22 +138,25 @@ export default {
         }
       });
     },
-    getUserInfo(){
-      const userInfo = {
-        account: "admin",
-        uid: "001"
-      };
-      this.$store.commit("updateLogin", true);
-      this.$store.commit("updateSession", userInfo);
+    setUserInfo(){
+      const user = this.loginForm.account;
+      const uid = new Date().getTime().toString(16);
+      handleCookie.setCookie("user", user, 0.5);
+      handleCookie.setCookie("uid", uid, 0.5);
+      this.$store.commit("updateCurrentTag", "admin");
       if(typeof (Storage) !== "undefined"){
         sessionStorage.setItem("isLogin", true);
+        sessionStorage.setItem("currentTag", "admin");
       }else{
         console.error("your browser doesn't support localstorage and sessionstorage.");
       }
     }
   },
-  created: function(){
-    console.log(handleCookie.getCookie("session"));
+  created(){
+
+  },
+  mounted(){
+
   }
 };
 </script>

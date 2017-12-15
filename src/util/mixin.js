@@ -3,23 +3,14 @@ import { mapState } from 'vuex';  //mapState 辅助函数
 export default {
   //生成计算属性
   computed: mapState({
-    session(state){
-      const session = {
-        uid: sessionStorage.getItem("uid"),
-        account: sessionStorage.getItem("user")
-      };
-      if(!state.session.uid){
-        this.$store.dispatch("updateSession", session);
-      }
-      return session;
-    },
     isLogin: "isLogin",
-    currentPath : "currentPath",
+    currentPath: "currentPath",
     openedTags: "openedTags",
     currentTag: "currentTag"
   }),
   watch: {
     "$route" (to, from){
+      console.log(to.fullPath);
       const pagePath = to.fullPath;
       const currentPathArr = pagePath.split("/").filter(item => item!=='');
       const len = this.$store.state.openedTags.length;

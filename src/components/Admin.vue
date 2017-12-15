@@ -17,8 +17,8 @@
           </div>
           <div class="header-panel-user">
             <Dropdown transfer class="header-dropdown" trigger="click" @on-click="handleDropdown">
-              <a href="javascript:void(0)">
-                  {{session.account}}<Icon type="arrow-down-b"></Icon>
+              <a href="javascript:void(0)" :data-uid="userInfo.uid">
+                  {{userInfo.user}}<Icon type="arrow-down-b"></Icon>
               </a>
               <DropdownMenu slot="list">
                   <DropdownItem name="userCenter">个人中心</DropdownItem>
@@ -31,14 +31,14 @@
         <div class="header-breadcrumb">
           <Breadcrumb>
             <BreadcrumbItem
-              v-for="(item, index) in openedTags"
+              v-for="(item, index) in currentPath"
               :key="item.name"
-              :href="index!==(openedTags.length-1) ? item.path:''">{{item.title}}</BreadcrumbItem>
+              :href="index!==(currentPath.length-1) ? item.path:''">{{item.title}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
       <div class="tags-wrap">
-        <tag-lists :pageTagList="openedTags"></tag-lists>
+        <tag-lists :openedTags="openedTags" :currentTag="currentTag"></tag-lists>
       </div>
       <div class="layout-content">
         <keep-alive>
@@ -52,6 +52,7 @@
 
 <script>
 import mixin from "../util/mixin";
+import handleCookie from "../util/handleCookie";
 import messageTip from "./admin-blocks/message-tip";
 import menuLists from "./admin-blocks/menu-lists";
 import tagLists from "./admin-blocks/tag-lists";
@@ -71,7 +72,7 @@ export default {
       avatarSrc: img,
       dataSource: null,
       mesCount: 3,
-
+      userInfo: null
     };
   },
   computed: {
@@ -96,18 +97,21 @@ export default {
         this.$store.commit("updateSession", null);
         this.$router.push("/login");
       }
+    },
+    getUserInfo(){
+      return {user: handleCookie.getCookie("user"), uid: handleCookie.getCookie("uid")};
+      // this.$http.get("/GET/userLists").then(function(res){
+      //   if(res.readyState === 4 && res.status === 200){
+      //     this.dataSource = res.data;
+      //   }
+      // }).catch(function(error){
+      //   console.log(error);
+      // });
     }
   },
   created(){
-    console.log(this.openedTags);
-    this.$http.get("/GET/userLists").then(function(res){
-      if(res.readyState === 4 && res.status === 200){
-        this.dataSource = res.data;
-      }
+    this.userInfo = this.getUserInfo();
 
-    }).catch(function(error){
-      console.log(error);
-    });
   }
 };
 </script>
@@ -165,7 +169,7 @@ export default {
         .header-panel-icon{
           float: left;
           width: 40%;
-          text-align: center;
+          text-align: right;
           height: 60px;
         }
         .header-panel-user{
@@ -184,7 +188,7 @@ export default {
       }
     }
     .tags-wrap{
-      padding: 5px 15px;
+      padding: 5px 10px;
       height: 44px;
       box-shadow: 0 1px 1px 1px rgba(128,128,128,.1);
     }
@@ -194,7 +198,7 @@ export default {
       right: 0;
       bottom: 0;
       top: 106px;
-      margin: 8px 15px;
+      margin: 8px 10px;
       border-radius: 4px;
       overflow: auto;
     }

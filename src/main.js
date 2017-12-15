@@ -30,13 +30,20 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!sessionStorage.getItem("isLogin")){
+    if(sessionStorage.getItem("isLogin")){
+      store.dispatch({
+        type: "updateSession",
+        obj: {
+          isLogin: true,
+          currentTag: sessionStorage.getItem("currentTag")
+        }
+      });
+      next();
+    }else{
       next({
         path: "/login",
-        query: {redirect:to.fullPath}    //查询参数
+        query: {redirect:to.fullPath},    //查询参数
       });
-    }else{
-      next();
     }
   }else {
     next();

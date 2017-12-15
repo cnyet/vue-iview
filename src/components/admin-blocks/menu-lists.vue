@@ -74,7 +74,7 @@
           <Icon type="key" size="20"></Icon>
         </Button>
       </Dropdown>
-      <Dropdown placement="right-start" transfer trigger="click" @on-click="changeMenu">
+      <Dropdown placement="right-start" transfer @on-click="changeMenu">
         <Button type="text" class="dropdown-btn">
           <Icon type="grid" size="20"></Icon>
         </Button>
@@ -118,20 +118,32 @@
     props: ["shrink"],
     methods: {
       changeMenu (active){
-        const openedTags = {
-          title: this.$refs[active].innerText,
-          name: active,
-          path: active
-        };
-        const pathArr = this.$route.fullPath.split("/").filter(item => item!=='');
-        console.log(active, pathArr);
-        /* 默认接受点击导航的name,name是组件名 */
-        // this.$emit("on-change", active);
+        const pathArr = this.$route.fullPath.split("/").filter(item => item!=='').map(function(ele){
+          let paths = null;
+          if(ele === "admin"){
+            paths = {
+              title: "首页",
+              name: "admin",
+              path: "/admin"
+            };
+          }else{
+            paths = {
+              title: this.$refs[ele].innerText,
+              name: ele,
+              path: ele
+            };
+          }
+          return paths;
+        });
+
         this.$router.push({
           name: active
         });
-        this.$store.commit("addOpenedTags", openedTags);
-        this.$store.commit("updateCurrentPath", pathArr);
+        console.log(active, pathArr);
+        // this.$store.commit("updateCurrentTag", active);
+        // sessionStorage.setItem("currentTag", active);
+        // this.$store.commit("addOpenedTags", openedTags);
+        // this.$store.commit("updateCurrentPath", pathArr);
       }
     }
   };

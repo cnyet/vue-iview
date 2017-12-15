@@ -12,19 +12,6 @@
 <script>
 export default {
   name: 'app',
-  data(){
-    return {
-      isLogin: false
-
-    };
-  },
-  //组件开始挂载时
-  mounted: function(){
-
-  },
-  methods: {
-
-  }
 };
 </script>
 

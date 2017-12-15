@@ -35,7 +35,8 @@ export default {
   },
   methods: {
     updateUser(){
-
+      //重置表单
+      // this.$refs['loginForm'].resetFields();
     }
   }
 };

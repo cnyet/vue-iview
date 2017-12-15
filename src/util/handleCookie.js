@@ -2,6 +2,7 @@ export default {
   /* 设置cookie */
   setCookie (name, value, expires){
     var exdate = new Date();
+    //设置过期时间以小时为单位
     exdate.setTime(exdate.getTime() + (expires * 60 * 60 * 1000));
     document.cookie = name + "=" + escape(value) +
     ((expires == null) ? "" : ";expires=" + exdate.toGMTString());

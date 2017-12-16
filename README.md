@@ -2,11 +2,12 @@
 > 一个PC端的包含前台界面和后台管理的demo。
 
 ### 前端技术架构：
- - js框架：Vue2.5.2
- - 前端路由：vue-router3.0.1
- - UI组件：iview2.7.3
- - 构建工具：Webpack3.6.0
- - 状态管理模式：Vuex3.0.1
+ - js框架：Vue-2.5.2
+ - 前端路由：vue-router-3.0.1
+ - UI组件：iview-2.7.3
+ - 构建工具：Webpack-3.6.0
+ - 状态管理模式：Vuex-3.0.1
+ - promise 的 HTTP 库：axios-0.17.1
 
 ### 目录结构
 ```

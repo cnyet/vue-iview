@@ -78,6 +78,13 @@ export default {
   computed: {
 
   },
+  watch: {
+    "$route" (to, from){
+      this.$store.commit("updateCurrentTag", to.name);
+      this.$store.commit("addOpenedTags", to.name);
+      this.$store.commit("updateCurrentPath", to.name);
+    }
+  },
   methods: {
     toggleClick(){
       if(this.shrink){
@@ -92,7 +99,7 @@ export default {
           name: "userCenter"
         });
       }else if(name === "logout"){
-        sessionStorage.removeItem("isLogin");
+        localStorage.clear();
         this.$store.commit("updateLogin", false);
         this.$store.commit("updateSession", null);
         this.$router.push("/login");

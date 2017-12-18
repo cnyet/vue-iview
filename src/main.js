@@ -29,13 +29,18 @@ Vue.config.productionTip = false;
 //$route.matched是所有路由记录数组
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
+  if(!handleCookie.getCookie("uid")){
+    localStorage.setItem("isLogin", false);
+  }
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(sessionStorage.getItem("isLogin")){
+    var status = localStorage.getItem("isLogin");
+    if(status === "true"){
+      console.log(true);
       store.dispatch({
         type: "updateSession",
         obj: {
           isLogin: true,
-          currentTag: sessionStorage.getItem("currentTag")
+          currentTag: localStorage.getItem("currentTag")
         }
       });
       next();

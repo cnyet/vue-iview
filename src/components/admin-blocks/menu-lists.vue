@@ -116,35 +116,28 @@
   export default {
     name: "menuLists",
     props: ["shrink"],
+    data(){
+      return {
+
+      };
+    },
     methods: {
       changeMenu (active){
-        const pathArr = this.$route.fullPath.split("/").filter(item => item!=='').map(function(ele){
-          let paths = null;
-          if(ele === "admin"){
-            paths = {
-              title: "首页",
-              name: "admin",
-              path: "/admin"
-            };
-          }else{
-            paths = {
-              title: this.$refs[ele].innerText,
-              name: ele,
-              path: ele
-            };
-          }
-          return paths;
-        });
-
         this.$router.push({
           name: active
         });
-        console.log(active, pathArr);
+        console.log(active, this.$route.fullPath);
         // this.$store.commit("updateCurrentTag", active);
         // sessionStorage.setItem("currentTag", active);
         // this.$store.commit("addOpenedTags", openedTags);
         // this.$store.commit("updateCurrentPath", pathArr);
+      },
+      getCurrentPath(pathArr){
+
       }
+    },
+    created (){
+
     }
   };
 </script>

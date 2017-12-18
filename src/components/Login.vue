@@ -145,8 +145,10 @@ export default {
       handleCookie.setCookie("uid", uid, 0.5);
       this.$store.commit("updateCurrentTag", "admin");
       if(typeof (Storage) !== "undefined"){
-        sessionStorage.setItem("isLogin", true);
-        sessionStorage.setItem("currentTag", "admin");
+        localStorage.setItem("isLogin", true);
+        localStorage.setItem("currentTag", "admin");
+        localStorage.openedTags = this.$store.state.openedTags;
+        localStorage.currentPath = this.$store.state.currentPath;
       }else{
         console.error("your browser doesn't support localstorage and sessionstorage.");
       }

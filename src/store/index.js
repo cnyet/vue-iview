@@ -1,6 +1,7 @@
 import Vue from 'vue';
 //状态管理模式
 import Vuex from 'vuex';
+import { adminRouter } from "../router/admin";
 
 Vue.use(Vuex);
 //创建vuex仓库
@@ -19,7 +20,8 @@ export default new Vuex.Store({
       title: "首页",
       name: "admin",
       path: "/admin"
-    }]
+    }],
+    routers: adminRouter
   },
   //state的计算属性
   getters: {
@@ -33,15 +35,16 @@ export default new Vuex.Store({
     updateLogin(state, status){
       state.isLogin = status;
     },
-    addOpenedTags (state, tags){
+    addOpenedTags (state, tag){
+      console.log(state.routers);
       let hasTheName = false;
-      state.openedTags.forEach(item => {
-        if(item.name === tags.name){
+      state.routers.forEach(item => {
+        if(item.name === tag){
           hasTheName = true;
         }
       });
       if(!hasTheName){
-        state.openedTags.push(tags);
+        state.openedTags.push(tag);
       }
     },
     deleteOpenedTags(state, name){
@@ -51,11 +54,11 @@ export default new Vuex.Store({
         }
       });
     },
-    updateCurrentPath(state, path){
-      state.currentPath = path;
+    updateCurrentPath(state, pathArr){
+      state.currentPath = pathArr;
     },
-    updateCurrentTag(state, name){
-      state.currentTag = name;
+    updateCurrentTag(state, tag){
+      state.currentTag = tag;
     }
   },
   actions: {

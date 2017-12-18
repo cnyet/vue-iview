@@ -34,7 +34,7 @@ export default {
     }
   },
   created(){
-    console.log(this.openedTags, this.currentTag);
+    console.log(this.openedTags);
   }
 };
 </script>

@@ -30,26 +30,26 @@
   <div class="menu-container">
     <Menu theme="dark" width="auto" @on-select="changeMenu" v-show="!shrink">
       <div class="layout-logo-left"></div>
-      <MenuItem name="auth">
+      <MenuItem name="authority">
         <Icon type="key"></Icon>
-        <span ref="auth" class="layout-text">权限管理</span>
+        <span class="layout-text">权限管理</span>
       </MenuItem>
       <Submenu name="table">
         <template slot="title">
           <Icon type="grid"></Icon>
           <span class="layout-text">表格管理</span>
         </template>
-        <MenuItem name="tabMove">
+        <MenuItem name="dragTab">
           <Icon type="arrow-move"></Icon>
-          <span ref="tabMove" class="layout-text">可拖拽排序表格</span>
+          <span class="layout-text">可拖拽排序表格</span>
         </MenuItem>
-        <MenuItem name="tabEdit">
+        <MenuItem name="editTab">
           <Icon type="edit"></Icon>
-          <span ref="tabEdit" class="layout-text">可编辑表格</span>
+          <span class="layout-text">可编辑表格</span>
         </MenuItem>
-        <MenuItem name="tabSearch">
+        <MenuItem name="searchTab">
           <Icon type="search"></Icon>
-          <span ref="tabSearch" class="layout-text">可搜索表格</span>
+          <span class="layout-text">可搜索表格</span>
         </MenuItem>
       </Submenu>
       <Submenu name="form">
@@ -57,20 +57,20 @@
           <Icon type="android-checkbox"></Icon>
           <span class="layout-text">表单管理</span>
         </template>
-        <MenuItem name="formCompose">
+        <MenuItem name="composeForm">
           <Icon type="compose"></Icon>
-          <span ref="formCompose" class="layout-text">文章发布</span>
+          <span class="layout-text">文章发布</span>
         </MenuItem>
-        <MenuItem name="formSwap">
+        <MenuItem name="swapForm">
           <Icon type="arrow-swap"></Icon>
-          <span ref="formSwap" class="layout-text">工作流</span>
+          <span class="layout-text">工作流</span>
         </MenuItem>
       </Submenu>
     </Menu>
     <div class="dropdown-container" v-show="shrink">
       <div class="layout-logo-left"></div>
-      <Dropdown placement="right-start" name="auth">
-        <Button type="text" class="dropdown-btn" @click="changeMenu('auth')">
+      <Dropdown placement="right-start" name="authority">
+        <Button type="text" class="dropdown-btn" @click="changeMenu('authority')">
           <Icon type="key" size="20"></Icon>
         </Button>
       </Dropdown>
@@ -79,15 +79,15 @@
           <Icon type="grid" size="20"></Icon>
         </Button>
         <DropdownMenu class="dropdown-menu" slot="list">
-          <DropdownItem name="tabMove">
+          <DropdownItem name="dragTab">
             <Icon type="arrow-move"></Icon>
             <span class="layout-text">可拖拽排序表格</span>
           </DropdownItem>
-          <DropdownItem name="tabEdit">
+          <DropdownItem name="editTab">
             <Icon type="compose"></Icon>
             <span class="layout-text">可编辑表格</span>
           </DropdownItem>
-          <DropdownItem name="tabSearch">
+          <DropdownItem name="searchTab">
             <Icon type="search"></Icon>
             <span class="layout-text">可搜索表格</span>
           </DropdownItem>
@@ -98,11 +98,11 @@
           <Icon type="android-checkbox" size="20"></Icon>
         </Button>
         <DropdownMenu class="dropdown-menu" slot="list">
-          <DropdownItem name="formCompose">
+          <DropdownItem name="composeForm">
             <Icon type="compose"></Icon>
             <span class="layout-text">文章发布</span>
           </DropdownItem>
-          <DropdownItem name="formSwap">
+          <DropdownItem name="swapForm">
             <Icon type="arrow-swap"></Icon>
             <span class="layout-text">工作流</span>
           </DropdownItem>
@@ -126,11 +126,14 @@
         this.$router.push({
           name: active
         });
-        console.log(active, this.$route.fullPath);
-        // this.$store.commit("updateCurrentTag", active);
-        // sessionStorage.setItem("currentTag", active);
-        // this.$store.commit("addOpenedTags", openedTags);
-        // this.$store.commit("updateCurrentPath", pathArr);
+        console.log(this.$store.state.currentTag);
+        const currentTag = this.$store.state.currentTag;
+        this.$store.commit("updateCurrentTag", active);
+        localStorage.setItem("currentTag", active);
+        if(currentTag !== active){
+          this.$store.commit("addOpenedTags", active);
+          this.$store.commit("updateCurrentPath", this.$route.fullPath);
+        }
       },
       getCurrentPath(pathArr){
 

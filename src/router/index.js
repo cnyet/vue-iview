@@ -26,6 +26,6 @@ export default new Router({
       name: "registe",
       props: {status: false},
       component: Login
-    }, adminRouter
+    }, ...adminRouter
   ]
 });

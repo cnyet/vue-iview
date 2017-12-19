@@ -80,9 +80,11 @@ export default {
   },
   watch: {
     "$route" (to, from){
-      this.$store.commit("updateCurrentTag", to.name);
-      this.$store.commit("addOpenedTags", to.name);
-      this.$store.commit("updateCurrentPath", to.name);
+      if(to.name !== "login" && to.name!=="registe"){
+        this.$store.commit("updateCurrentTag", to.name);
+        this.$store.commit("addOpenedTags", to.name);
+        this.$store.commit("updateCurrentPath", this.$route.fullPath);
+      }
     }
   },
   methods: {
@@ -102,6 +104,8 @@ export default {
         localStorage.clear();
         this.$store.commit("updateLogin", false);
         this.$store.commit("updateSession", null);
+        handleCookie.delCookie("uid");
+        handleCookie.delCookie("user");
         this.$router.push("/login");
       }
     },

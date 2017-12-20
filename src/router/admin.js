@@ -35,19 +35,19 @@ export const adminRouter = [{
   component: Admin,
   children: [
     {
-      path: "dragableTable",
+      path: "dragTab",
       name: "dragTab",
       icon: "arrow-move",
       title: "可拖拽排序表格",
       component: dragableTable
     }, {
-      path: "editableTable",
+      path: "editTab",
       name: "editTab",
       icon: "edit",
       title: "可编辑表格",
       component: editableTable
     }, {
-      path: "searchableTable",
+      path: "searchTab",
       name: "searchTab",
       icon: "search",
       title: "可搜索表格",

@@ -6,7 +6,8 @@ export default {
     isLogin: "isLogin",
     currentPath: "currentPath",
     openedTags: "openedTags",
-    currentTag: "currentTag"
+    currentTag: "currentTag",
+    openedSubmenuArr: "openedSubmenuArr"
   }),
 
 };

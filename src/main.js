@@ -38,8 +38,8 @@ router.beforeEach((to, from, next) => {
       store.dispatch({
         type: "updateSession",
         isLogin: true,
-        currentTag: localStorage.getItem("currentTag"),
-        openedTags: to.name,
+        currentTag: localStorage.currentTag ? localStorage.currentTag : to.name,
+        openedTags: localStorage.openedTags ? JSON.parse(localStorage.openedTags) : store.state.openedTags[0],
         currentPath: to.fullPath
       });
       next();

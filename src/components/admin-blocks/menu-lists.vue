@@ -28,7 +28,7 @@
 
 <template>
   <div class="menu-container">
-    <Menu theme="dark" width="auto" @on-select="changeMenu" v-show="!shrink">
+    <Menu theme="dark" width="auto" :active-name="$route.name" :open-names="openedSubmenuArr" @on-select="changeMenu" v-show="!shrink">
       <div class="layout-logo-left"></div>
       <MenuItem name="authority">
         <Icon type="key"></Icon>
@@ -67,7 +67,7 @@
         </MenuItem>
       </Submenu>
     </Menu>
-    <div class="dropdown-container" v-show="shrink">
+    <div class="dropdown-container" active-name="" v-show="shrink">
       <div class="layout-logo-left"></div>
       <Dropdown placement="right-start" name="authority">
         <Button type="text" class="dropdown-btn" @click="changeMenu('authority')">
@@ -113,34 +113,32 @@
 </template>
 
 <script>
-  export default {
-    name: "menuLists",
-    props: ["shrink"],
-    data(){
-      return {
+import mixin from "../../util/mixin";
+export default {
+  name: "menuLists",
+  mixins: [mixin],
+  props: ["shrink"],
+  data(){
+    return {
 
-      };
-    },
-    methods: {
-      changeMenu (active){
-        this.$router.push({
-          name: active
-        });
-        console.log(this.$store.state.currentTag);
-        const currentTag = this.$store.state.currentTag;
+    };
+  },
+  methods: {
+    changeMenu (active){
+      this.$router.push({
+        name: active
+      });
+      console.log(active, this.currentTag);
+      if(this.currentTag !== active){
         this.$store.commit("updateCurrentTag", active);
         localStorage.setItem("currentTag", active);
-        if(currentTag !== active){
-          this.$store.commit("addOpenedTags", active);
-          this.$store.commit("updateCurrentPath", this.$route.fullPath);
-        }
-      },
-      getCurrentPath(pathArr){
-
+        this.$store.commit("updateOpenedTags", active);
+        this.$store.commit("updateCurrentPath", this.$route.fullPath);
       }
-    },
-    created (){
-
     }
-  };
+  },
+  created (){
+
+  }
+};
 </script>

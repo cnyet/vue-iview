@@ -33,12 +33,12 @@
             <BreadcrumbItem
               v-for="(item, index) in currentPath"
               :key="item.name"
-              :href="index!==(currentPath.length-1) ? item.path:''">{{item.title}}</BreadcrumbItem>
+              :href="(index!==currentPath.length-1)&&item.name!=='tables'&&item.name!=='forms'?item.path:''">{{item.title}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
       <div class="tags-wrap">
-        <tag-lists :openedTags="openedTags" :currentTag="currentTag"></tag-lists>
+        <tag-lists></tag-lists>
       </div>
       <div class="layout-content">
         <keep-alive>
@@ -53,6 +53,7 @@
 <script>
 import mixin from "../util/mixin";
 import handleCookie from "../util/handleCookie";
+import { adminRouter } from "../router/admin";
 import messageTip from "./admin-blocks/message-tip";
 import menuLists from "./admin-blocks/menu-lists";
 import tagLists from "./admin-blocks/tag-lists";
@@ -80,9 +81,33 @@ export default {
   },
   watch: {
     "$route" (to, from){
+      let tags = null;
+      for(let ele of adminRouter){
+        if(ele.name===to.name){
+          tags = {
+            title: ele.title,
+            name: ele.name,
+            path: ele.path
+          };
+          break;
+        }else{
+          if(ele.children.length){
+            for(let val of ele.children){
+              if(val.name === to.name){
+                tags = {
+                  title: val.title,
+                  name: val.name,
+                  path: val.path
+                };
+                break;
+              }
+            }
+          }
+        }
+      }
       if(to.name !== "login" && to.name!=="registe"){
         this.$store.commit("updateCurrentTag", to.name);
-        this.$store.commit("addOpenedTags", to.name);
+        this.$store.commit("updateOpenedTags", tags);
         this.$store.commit("updateCurrentPath", this.$route.fullPath);
       }
     }

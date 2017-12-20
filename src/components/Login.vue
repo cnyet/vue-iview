@@ -147,8 +147,8 @@ export default {
       if(typeof (Storage) !== "undefined"){
         localStorage.setItem("isLogin", true);
         localStorage.setItem("currentTag", "admin");
-        localStorage.openedTags = this.$store.state.openedTags;
-        localStorage.currentPath = this.$store.state.currentPath;
+        localStorage.setItem("openedTags", JSON.stringify(this.$store.state.openedTags));
+        localStorage.setItem("currentPath", JSON.stringify(this.$store.state.currentPath));
       }else{
         console.error("your browser doesn't support localstorage and sessionstorage.");
       }

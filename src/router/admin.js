@@ -1,4 +1,5 @@
 import Admin from "@/components/Admin";
+import AdminHome from "@/components/admin-blocks/admin-home";
 import Authority from "@/components/admin-blocks/admin-auth";
 import UserCenter from "@/components/admin-blocks/user-center";
 import dragableTable from "@/components/table-blocks/dragable-table";
@@ -9,12 +10,15 @@ import swapForm from "@/components/form-blocks/swap-form";
 
 export const adminRouter = [{
   path: "/admin",
-  name: "admin",
   title: "首页",
   meta: { requiresAuth: true },
   component: Admin,
   children: [
     {
+      path: "",
+      name: "admin",
+      component: AdminHome
+    }, {
       path: "authority",
       name: "authority",
       icon: 'key',

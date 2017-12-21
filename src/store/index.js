@@ -36,17 +36,20 @@ export default new Vuex.Store({
     updateLogin(state, status){
       state.isLogin = status;
     },
-    updateOpenedTags (state, tags){
-      console.log(tags);
-      let hasTheName = false;
-      for(let item of state.openedTags){
-        if(item.name === tags.name){
-          hasTheName = true;
-          break;
+    updateOpenedTags (state, tagsArr){
+      if(tagsArr.length){
+        for(let item of tagsArr){
+          let hasItem = false;
+          for(let ele of state.openedTags){
+            if(ele.name === item.name){
+              hasItem = true;
+              break;
+            }
+          }
+          if(!hasItem){
+            state.openedTags.push(item);
+          }
         }
-      }
-      if(!hasTheName){
-        state.openedTags.push(tags);
         localStorage.openedTags = JSON.stringify(state.openedTags);
       }
     },
@@ -58,41 +61,52 @@ export default new Vuex.Store({
         }
       }
     },
-    updateCurrentPath(state, path){
-      state.currentPath = state.currentPath.filter(item => item.name==="admin");
-      let pathArr = path.split("/").filter(item => item!=="");
-      let arr = pathArr.filter(item => state.currentPath.findIndex(ele => ele.name===item)===-1);
-      if(arr.length){
-        let tagArr = arr.map(item => {
-          let tagObj = null;
-          for(let ele of adminRouter){
-            if(item === ele.name){
-              tagObj = {
-                title: ele.title,
-                name: ele.name,
-                path: ele.path
-              };
-              break;
-            }else{
-              if(ele.children.length){
-                for(let val of ele.children){
-                  if(item === val.name){
-                    tagObj = {
+    updateCurrentPath(state, name){
+      let pathArr = state.currentPath.filter(item => item.name==="admin");
+      if(name !== "admin"){
+        for(let ele of adminRouter){
+          if(ele.name===name){
+            pathArr.push({
+              title: ele.title,
+              name: ele.name,
+              path: ele.path
+            });
+            break;
+          }else{
+            if(ele.children.length){
+              for(let val of ele.children){
+                if(val.name===name){
+                  if(ele.name){
+                    pathArr.push({
+                      title: ele.title,
+                      name: ele.name,
+                      path: ele.path
+                    }, {
                       title: val.title,
                       name: val.name,
                       path: val.path
-                    };
-                    break;
+                    });
+                  }else{
+                    pathArr.push({
+                      title: val.title,
+                      name: val.name,
+                      path: val.path
+                    });
                   }
+                  break;
                 }
               }
             }
           }
-          return tagObj;
-        });
-        state.currentPath = state.currentPath.concat(tagArr);
-        localStorage.currentPath = JSON.stringify(state.currentPath);
+        }
       }
+      console.log(pathArr);
+      state.currentPath = pathArr;
+      // let pathArr = path.split("/").filter(item => item!=="");
+      // let arr = pathArr.filter(item => state.currentPath.findIndex(ele => ele.name===item)===-1);
+    },
+    openedSubmenu(state, arr){
+      state.openedSubmenuArr = arr;
     },
     updateCurrentTag(state, tag){
       state.currentTag = tag;
@@ -106,6 +120,7 @@ export default new Vuex.Store({
       context.commit("updateCurrentTag", obj.currentTag);
       context.commit("updateOpenedTags", obj.openedTags);
       context.commit("updateCurrentPath", obj.currentPath);
+      context.commit("openedSubmenu", obj.submenuArr);
     }
   }
 });

@@ -52,8 +52,7 @@
 
 <script>
 import mixin from "../util/mixin";
-import handleCookie from "../util/handleCookie";
-import { adminRouter } from "../router/admin";
+import util from "../util";
 import messageTip from "./admin-blocks/message-tip";
 import menuLists from "./admin-blocks/menu-lists";
 import tagLists from "./admin-blocks/tag-lists";
@@ -81,35 +80,36 @@ export default {
   },
   watch: {
     "$route" (to, from){
-      let tags = null;
-      for(let ele of adminRouter){
-        if(ele.name===to.name){
-          tags = {
-            title: ele.title,
-            name: ele.name,
-            path: ele.path
-          };
-          break;
-        }else{
-          if(ele.children.length){
-            for(let val of ele.children){
-              if(val.name === to.name){
-                tags = {
-                  title: val.title,
-                  name: val.name,
-                  path: val.path
-                };
-                break;
-              }
-            }
-          }
-        }
-      }
-      if(to.name !== "login" && to.name!=="registe"){
-        this.$store.commit("updateCurrentTag", to.name);
-        this.$store.commit("updateOpenedTags", tags);
-        this.$store.commit("updateCurrentPath", this.$route.fullPath);
-      }
+      // console.log(to.name);
+      // let tags = null;
+      // for(let ele of adminRouter){
+      //   if(ele.name===to.name){
+      //     tags = {
+      //       title: ele.title,
+      //       name: ele.name,
+      //       path: ele.path
+      //     };
+      //     break;
+      //   }else{
+      //     if(ele.children.length){
+      //       for(let val of ele.children){
+      //         if(val.name === to.name){
+      //           tags = {
+      //             title: val.title,
+      //             name: val.name,
+      //             path: val.path
+      //           };
+      //           break;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      // if(to.name !== "login" && to.name!=="registe"){
+      //   this.$store.commit("updateCurrentTag", to.name);
+      //   this.$store.commit("updateOpenedTags", [tags]);
+      //   this.$store.commit("updateCurrentPath", this.$route.fullPath);
+      // }
     }
   },
   methods: {
@@ -129,13 +129,13 @@ export default {
         localStorage.clear();
         this.$store.commit("updateLogin", false);
         this.$store.commit("updateSession", null);
-        handleCookie.delCookie("uid");
-        handleCookie.delCookie("user");
+        util.delCookie("uid");
+        util.delCookie("user");
         this.$router.push("/login");
       }
     },
     getUserInfo(){
-      return {user: handleCookie.getCookie("user"), uid: handleCookie.getCookie("uid")};
+      return {user: util.getCookie("user"), uid: util.getCookie("uid")};
       // this.$http.get("/GET/userLists").then(function(res){
       //   if(res.readyState === 4 && res.status === 200){
       //     this.dataSource = res.data;

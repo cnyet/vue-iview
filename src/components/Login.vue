@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import handleCookie from "../util/handleCookie";
+import util from "../util";
 export default {
   name: "home",
   props: ["status"],
@@ -119,7 +119,16 @@ export default {
         if(valid && this.loginForm.account==="admin" && this.loginForm.password==="123"){
           this.$Message.success("登录成功!");
           this.setUserInfo();
-          this.$router.push("/admin");
+          let currentTag = this.$store.state.currentTag;
+          if(currentTag){
+            this.$router.push({
+              name: currentTag,
+              query: ""
+            });
+          }else{
+            this.$router.push("/admin");
+          }
+
         }else{
           this.errorCount ++;
           this.$Message.error("登录失败!");
@@ -141,14 +150,14 @@ export default {
     setUserInfo(){
       const user = this.loginForm.account;
       const uid = new Date().getTime().toString(16);
-      handleCookie.setCookie("user", user, 0.5);
-      handleCookie.setCookie("uid", uid, 0.5);
-      this.$store.commit("updateCurrentTag", "admin");
+      util.setCookie("user", user, 0.5);
+      util.setCookie("uid", uid, 0.5);
+      // this.$store.commit("updateCurrentTag", "admin");
       if(typeof (Storage) !== "undefined"){
         localStorage.setItem("isLogin", true);
-        localStorage.setItem("currentTag", "admin");
-        localStorage.setItem("openedTags", JSON.stringify(this.$store.state.openedTags));
-        localStorage.setItem("currentPath", JSON.stringify(this.$store.state.currentPath));
+        // localStorage.setItem("currentTag", "admin");
+        // localStorage.setItem("openedTags", JSON.stringify(this.$store.state.openedTags));
+        // localStorage.setItem("currentPath", JSON.stringify(this.$store.state.currentPath));
       }else{
         console.error("your browser doesn't support localstorage and sessionstorage.");
       }

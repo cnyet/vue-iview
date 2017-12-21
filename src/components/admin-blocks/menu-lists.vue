@@ -28,7 +28,8 @@
 
 <template>
   <div class="menu-container">
-    <Menu theme="dark" width="auto" :active-name="$route.name" :open-names="openedSubmenuArr" @on-select="changeMenu" v-show="!shrink">
+    <Menu theme="dark" width="auto" :active-name="$route.name"
+     :open-names="openedSubmenuArr" @on-select="changeMenu" @on-open-change="changeSubmenu" v-show="!shrink">
       <div class="layout-logo-left"></div>
       <MenuItem name="authority">
         <Icon type="key"></Icon>
@@ -114,6 +115,7 @@
 
 <script>
 import mixin from "../../util/mixin";
+import { adminRouter } from "../../router/admin";
 export default {
   name: "menuLists",
   mixins: [mixin],
@@ -128,13 +130,41 @@ export default {
       this.$router.push({
         name: active
       });
-      console.log(active, this.currentTag);
       if(this.currentTag !== active){
-        this.$store.commit("updateCurrentTag", active);
+        let tags = null;
+        for(let ele of adminRouter){
+          if(ele.name===active){
+            tags = {
+              title: ele.title,
+              name: ele.name,
+              path: ele.path
+            };
+            break;
+          }else{
+            if(ele.children.length){
+              for(let val of ele.children){
+                if(val.name === active){
+                  tags = {
+                    title: val.title,
+                    name: val.name,
+                    path: val.path
+                  };
+                  break;
+                }
+              }
+            }
+          }
+        }
+        console.log(this.openedSubmenuArr);
         localStorage.setItem("currentTag", active);
-        this.$store.commit("updateOpenedTags", active);
-        this.$store.commit("updateCurrentPath", this.$route.fullPath);
+        this.$store.commit("updateCurrentTag", active);
+        this.$store.commit("updateOpenedTags", [tags]);
+        this.$store.commit("updateCurrentPath", active);
       }
+    },
+    changeSubmenu(arr){
+      this.$store.commit("openedSubmenu", arr);
+      localStorage.setItem("openedSubmenu", JSON.stringify(arr));
     }
   },
   created (){

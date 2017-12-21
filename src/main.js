@@ -10,7 +10,7 @@ import axios from "axios";      //提供http请求
 import App from './App';
 import router from './router';
 import "iview/dist/styles/iview.css";
-import handleCookie from "./util/handleCookie";
+import util from "./util";
 import store from "./store";
 // 如果使用模块化机制编程，要调用 Vue.use()安装 Vue插件
 Vue.use(iView);
@@ -29,18 +29,20 @@ Vue.config.productionTip = false;
 //$route.matched是所有路由记录数组
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
-  if(!handleCookie.getCookie("uid")){
+  if(!util.getCookie("uid")){
     localStorage.setItem("isLogin", false);
   }
   if(to.matched.some(record => record.meta.requiresAuth)){
     var status = localStorage.getItem("isLogin");
     if(status === "true"){
+      console.log(store.state);
       store.dispatch({
         type: "updateSession",
         isLogin: true,
         currentTag: localStorage.currentTag ? localStorage.currentTag : to.name,
-        openedTags: localStorage.openedTags ? JSON.parse(localStorage.openedTags) : store.state.openedTags[0],
-        currentPath: to.fullPath
+        openedTags: localStorage.openedTags ? JSON.parse(localStorage.openedTags) : [store.state.openedTags[0]],
+        currentPath: localStorage.currentTag ? localStorage.currentTag : to.name,
+        submenuArr: localStorage.openedSubmenu ? JSON.parse(localStorage.openedSubmenu) : []
       });
       next();
     }else{
@@ -77,7 +79,7 @@ new Vue({
   methods: {
     /* 检查是否存在session */
     checkLogin: function(){
-      if(!handleCookie.getCookie("session")){
+      if(!util.getCookie("session")){
         this.$router.push("/login");
       }
     }

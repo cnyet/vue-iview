@@ -1,4 +1,11 @@
-<style scoped lang="less"></style>
+<style scoped lang="less">
+  .tag-container{
+    height: 34px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+</style>
 
 <template>
   <div class="tag-container">
@@ -49,6 +56,7 @@ export default {
       }
     },
     linkTo(item){
+      localStorage.currentTag = item.name;
       this.$router.push({
         name: item.name,
         params: ""

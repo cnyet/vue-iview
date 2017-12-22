@@ -150,8 +150,8 @@ export default {
     setUserInfo(){
       const user = this.loginForm.account;
       const uid = new Date().getTime().toString(16);
-      util.setCookie("user", user, 0.5);
-      util.setCookie("uid", uid, 0.5);
+      util.setCookie("user", user, 1);
+      util.setCookie("uid", uid, 1);
       // this.$store.commit("updateCurrentTag", "admin");
       if(typeof (Storage) !== "undefined"){
         localStorage.setItem("isLogin", true);

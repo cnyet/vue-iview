@@ -8,7 +8,8 @@
       <div class="layout-header">
         <div class="header-menu">
           <Button class="menu-btn" type="text" @click="toggleClick">
-            <Icon type="navicon" size="32"></Icon>
+            <Icon type="arrow-right-c" size="32" v-if="shrink"></Icon>
+            <Icon type="navicon" size="32" v-else></Icon>
           </Button>
         </div>
         <div class="header-panel">
@@ -41,9 +42,11 @@
         <tag-lists></tag-lists>
       </div>
       <div class="layout-content">
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
+        <div class="layout-page">
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </div>
       </div>
     </Col>
   </Row>
@@ -72,7 +75,7 @@ export default {
       avatarSrc: img,
       dataSource: null,
       mesCount: 3,
-      userInfo: null
+      userInfo: null,
     };
   },
   computed: {
@@ -114,11 +117,7 @@ export default {
   },
   methods: {
     toggleClick(){
-      if(this.shrink){
-        this.shrink = false;
-      }else{
-        this.shrink = true;
-      }
+      this.shrink = !this.shrink;
     },
     handleDropdown(name){
       if(name === "userCenter"){
@@ -143,11 +142,11 @@ export default {
       // }).catch(function(error){
       //   console.log(error);
       // });
-    }
+    },
+
   },
   created(){
     this.userInfo = this.getUserInfo();
-
   }
 };
 </script>
@@ -234,9 +233,11 @@ export default {
       right: 0;
       bottom: 0;
       top: 106px;
-      margin: 8px 10px;
       border-radius: 4px;
       overflow: auto;
+      .layout-page{
+        margin: 10px;
+      }
     }
     .layout-copyright{
       font-size: 14px;

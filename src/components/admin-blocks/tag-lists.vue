@@ -1,23 +1,54 @@
 <style scoped lang="less">
   .tag-container{
-    height: 34px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
+    height: 44px;
+    overflow: hidden;
+    padding-right: 120px;
+    .tag-group{
+      overflow: visible;
+      white-space: nowrap;
+      padding: 5px 0 5px 10px;
+      float: left;
+      transition: left .3s ease;
+    }
+    .tag-list-drop{
+      float: right;
+      margin-right: -120px;
+      width: 120px;
+      height: 44px;
+      padding-top: 10px;
+      text-align: center;
+      background-color: white;
+      box-shadow: -3px 0 15px 3px rgba(0,0,0,.1);
+    }
   }
 </style>
 
 <template>
   <div class="tag-container">
-    <Tag
-        type="dot"
-        v-for="(item, index) in openedTags"
-        :key="item.name"
-        :name="item.name"
-        :closable="item.name==='admin'?false:true"
-        @click.native="linkTo(item)"
-        @on-close="closeTag"
-        :color="item.name===currentTag?'blue':'default'">{{item.title}}</Tag>
+      <div class="tag-group">
+        <transition-group tag="div" name="taglist-moving-animation">
+          <Tag
+            type="dot"
+            v-for="(item, index) in openedTags"
+            :key="item.name"
+            :name="item.name"
+            :closable="item.name==='admin'?false:true"
+            @click.native="linkTo(item)"
+            @on-close="closeTag"
+            :color="item.name===currentTag?'blue':'default'">{{item.title}}</Tag>
+        </transition-group>
+      </div>
+      <div class="tag-list-drop">
+        <Dropdown transfer>
+          <Button size="small" type="primary">
+            标签选项 <Icon type="arrow-down-b"></Icon>
+          </Button>
+          <DropdownMenu slot="list">
+            <DropdownItem name="clearAll">关闭所有</DropdownItem>
+            <DropdownItem name="clearOthers">关闭其他</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
   </div>
 </template>
 

@@ -109,16 +109,39 @@
             </Card>
           </Col>
         </Row>
+        <Row>
+          <Card :padding="0" class="map-card">
+            <p slot="title" class="card-title">
+              <Icon type="map"></Icon> 今日服务调用地理分布
+            </p>
+            <div class="map-wrap">
+              <Col span="10">
+              <div class="map-table">
+                <Table height="260" :columns="columns" :data="cityData"></Table>
+              </div>
+              </Col>
+              <Col span="14" class="map-content">
+                <Row type="flex" justify="center" align="middle">
+                  <admin-map></admin-map>
+                </Row>
+              </Col>
+            </div>
+          </Card>
+        </Row>
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-import imgSrc from "../../assets/avatar.jpg";
-import util from "../../util";
+import imgSrc from "@/assets/avatar.jpg";
+import util from "@/util";
+import adminMap from "./admin-map";
 export default {
   name: "adminHome",
+  components: {
+    adminMap
+  },
   data(){
     return {
       imgSrc: imgSrc,
@@ -129,6 +152,19 @@ export default {
       todoItem: [],
       showNewTodo: false,
       newToDoItemValue: "",
+      columns: [
+        {
+          title: "编号",
+          key: "id"
+        }, {
+          title: '城市',
+          key: 'name'
+        }, {
+          title: '流量',
+          key: 'value'
+        }
+      ],
+      cityData: []
     };
   },
   filters: {
@@ -141,6 +177,15 @@ export default {
       this.$http.get("/GET/todolist").then(function(res){
         if(res.status === 200){
           vm.todoList = res.data.data;
+        }
+      }).catch(function(error){
+        console.log(error);
+      });
+    },
+    getCityList(vm){
+      this.$http.get("/GET/citylist").then(function(res){
+        if(res.status === 200){
+          vm.cityData = res.data.data;
         }
       }).catch(function(error){
         console.log(error);
@@ -174,6 +219,7 @@ export default {
   created (){
     this.userName = util.getCookie("user");
     this.getTodoList(this);
+    this.getCityList(this);
   }
 };
 </script>
@@ -256,6 +302,15 @@ export default {
         font-size: 12px;
         font-weight: 500;
         color: #c8c8c8;
+      }
+    }
+  }
+  .map-card{
+    margin-top: 10px;
+    .map-wrap{
+      height:290px;
+      .map-table{
+        padding: 15px 5px;
       }
     }
   }

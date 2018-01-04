@@ -82,7 +82,7 @@ export default {
 
   },
   watch: {
-    "$route" (to, from){
+    // "$route" (to, from){
       // console.log(to.name);
       // let tags = null;
       // for(let ele of adminRouter){
@@ -113,7 +113,7 @@ export default {
       //   this.$store.commit("updateOpenedTags", [tags]);
       //   this.$store.commit("updateCurrentPath", this.$route.fullPath);
       // }
-    }
+    // }
   },
   methods: {
     toggleClick(){
@@ -223,7 +223,6 @@ export default {
       }
     }
     .tags-wrap{
-      padding: 5px 10px;
       height: 44px;
       box-shadow: 0 1px 1px 1px rgba(128,128,128,.1);
     }

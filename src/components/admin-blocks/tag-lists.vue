@@ -15,9 +15,16 @@
       margin-right: -120px;
       width: 120px;
       height: 44px;
+<<<<<<< HEAD
       padding: 8px 10px;
       background-color: white;
       box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
+=======
+      padding-top: 10px;
+      text-align: center;
+      background-color: white;
+      box-shadow: -3px 0 15px 3px rgba(0,0,0,.1);
+>>>>>>> f49b39298b722335f2f2b8723c1a0843f0e28229
     }
   }
 </style>
@@ -38,7 +45,11 @@
         </transition-group>
       </div>
       <div class="tag-list-drop">
+<<<<<<< HEAD
         <Dropdown transfer trigger="click" placement="bottom-start" style="margin-left: 10px" @on-click="handleTagsOption">
+=======
+        <Dropdown transfer>
+>>>>>>> f49b39298b722335f2f2b8723c1a0843f0e28229
           <Button size="small" type="primary">
             标签选项 <Icon type="arrow-down-b"></Icon>
           </Button>

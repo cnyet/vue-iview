@@ -55,6 +55,7 @@
 
 <script>
 import mixin from "../util/mixin";
+import { adminRouter } from "../router/admin";
 import util from "../util";
 import messageTip from "./admin-blocks/message-tip";
 import menuLists from "./admin-blocks/menu-lists";
@@ -124,6 +125,36 @@ export default {
         this.$router.push({
           name: "userCenter"
         });
+        if(this.currentTag !== name){
+          let tags = null;
+          for(let ele of adminRouter){
+            if(ele.name===name){
+              tags = {
+                title: ele.title,
+                name: ele.name,
+                path: ele.path
+              };
+              break;
+            }else{
+              if(ele.children.length){
+                for(let val of ele.children){
+                  if(val.name === name){
+                    tags = {
+                      title: val.title,
+                      name: val.name,
+                      path: val.path
+                    };
+                    break;
+                  }
+                }
+              }
+            }
+          }
+          localStorage.setItem("currentTag", name);
+          this.$store.commit("updateCurrentTag", name);
+          this.$store.commit("updateOpenedTags", [tags]);
+          this.$store.commit("updateCurrentPath", name);
+        }
       }else if(name === "logout"){
         localStorage.clear();
         this.$store.commit("updateLogin", false);

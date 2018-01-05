@@ -15,10 +15,9 @@
       margin-right: -120px;
       width: 120px;
       height: 44px;
-      padding-top: 10px;
-      text-align: center;
+      padding: 8px 10px;
       background-color: white;
-      box-shadow: -3px 0 15px 3px rgba(0,0,0,.1);
+      box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
     }
   }
 </style>
@@ -39,7 +38,7 @@
         </transition-group>
       </div>
       <div class="tag-list-drop">
-        <Dropdown transfer>
+        <Dropdown transfer trigger="click" placement="bottom-start" style="margin-left: 10px" @on-click="handleTagsOption">
           <Button size="small" type="primary">
             标签选项 <Icon type="arrow-down-b"></Icon>
           </Button>
@@ -92,6 +91,16 @@ export default {
         name: item.name,
         params: ""
       });
+    },
+    handleTagsOption(name){
+      if (name === 'clearAll') {
+          this.$store.commit('clearTags');
+          this.$router.push({
+              name: 'admin'
+          });
+      } else {
+          this.$store.commit('clearTags', this.currentTag);
+      }
     }
   },
   created(){

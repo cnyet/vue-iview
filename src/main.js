@@ -35,7 +35,6 @@ router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)){
     var status = localStorage.getItem("isLogin");
     if(status === "true"){
-      console.log(store.state);
       store.dispatch({
         type: "updateSession",
         isLogin: true,

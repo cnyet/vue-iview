@@ -100,7 +100,6 @@ export default new Vuex.Store({
           }
         }
       }
-      console.log(pathArr);
       state.currentPath = pathArr;
       // let pathArr = path.split("/").filter(item => item!=="");
       // let arr = pathArr.filter(item => state.currentPath.findIndex(ele => ele.name===item)===-1);
@@ -111,7 +110,19 @@ export default new Vuex.Store({
     updateCurrentTag(state, tag){
       state.currentTag = tag;
       localStorage.currentTag = tag;
-    }
+    },
+    clearTags(state, tag){
+      if(tag){
+        state.openedTags = state.openedTags.filter((item, index) => {
+          return tag === item.name || item.name === "admin";
+        });
+      }else{
+        state.openedTags.splice(1);
+        state.currentTag = "admin";
+        localStorage.currentTag = "admin";
+      }
+      localStorage.openedTags = JSON.stringify(state.openedTags);
+    },
   },
   actions: {
     //context具有与state相同方法和属性

@@ -3,7 +3,8 @@
   "presets": [
     //该preset就会只编译包含我们所声明环境缺少的特性的代码
     ["env", {
-      "modules": false,
+      "modules": false,   ////对amd,commonjs这样的模块化文件不转码
+      // "comments": false,  //在生成的文件中不产生注释
       "targets": {
         //指定支持主流浏览器最新的两个版本以及IE 8+,支持超过市场份额1%的浏览器
         "browsers": ["> 1%", "last 2 versions", "ie >= 8"]
@@ -22,7 +23,5 @@
       //"regenerator": true,
       //当调用辅助（内置垫片）设置模块（module）名字/路径
       //"moduleName": "babel-runtime"
-    }],
-  //针对特定环境设置的选项
-  "env": {  }
+    }]
 }

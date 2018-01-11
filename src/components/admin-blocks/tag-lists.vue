@@ -3,16 +3,20 @@
     height: 44px;
     overflow: hidden;
     padding-right: 120px;
+    position: relative;
     .tag-group{
       overflow: visible;
       white-space: nowrap;
       padding: 5px 0 5px 10px;
-      float: left;
+      position: absolute;
+      left: 0;
+      top: 0;
       transition: left .3s ease;
     }
     .tag-list-drop{
-      float: right;
-      margin-right: -120px;
+      position: absolute;
+      right: 0;
+      top: 0;
       width: 120px;
       height: 44px;
       padding: 8px 10px;
@@ -86,6 +90,7 @@ export default {
       }
     },
     linkTo(item){
+      console.log(this.$el.offsetWidth);
       localStorage.currentTag = item.name;
       this.$router.push({
         name: item.name,

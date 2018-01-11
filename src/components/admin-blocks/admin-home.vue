@@ -117,7 +117,7 @@
             <div class="map-wrap">
               <Col span="10">
               <div class="map-table">
-                <Table height="260" :columns="columns" :data="cityData"></Table>
+                <Table height="260" :columns="columns" :data="cityData" style="width:100%;"></Table>
               </div>
               </Col>
               <Col span="14" class="map-content">

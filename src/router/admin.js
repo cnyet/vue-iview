@@ -7,6 +7,8 @@ import editableTable from "@/components/table-blocks/editable-table";
 import searchableTable from "@/components/table-blocks/searchable-table";
 import composeForm from "@/components/form-blocks/compose-form";
 import swapForm from "@/components/form-blocks/swap-form";
+import imageEdit from "@/components/component-blocks/image-edit";
+import uploadFile from "@/components/component-blocks/upload";
 
 export const adminRouter = [{
   path: "/admin",
@@ -77,6 +79,27 @@ export const adminRouter = [{
       icon: "arrow-swap",
       title: "工作流",
       component: swapForm
+    }
+  ]
+}, {
+  path: "/comp",
+  name: "component",
+  title: "组件管理",
+  meta: { requiresAuth: true },
+  component: Admin,
+  children: [
+    {
+      path: "imageEdit",
+      name: "imageEdit",
+      icon: "crop",
+      title: "图片预览编辑",
+      component: imageEdit
+    }, {
+      path: "uploadFile",
+      name: "uploadFile",
+      icon: "android-upload",
+      title: "文件上传",
+      component: uploadFile
     }
   ]
 }];

@@ -126,7 +126,10 @@ export default {
               query: ""
             });
           }else{
-            this.$router.push("/admin");
+            let openedPage = localStorage.getItem("currentTag");
+            this.$router.push({
+              name: openedPage || "admin"
+            });
           }
 
         }else{

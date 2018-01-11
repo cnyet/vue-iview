@@ -67,6 +67,20 @@
           <span class="layout-text">工作流</span>
         </MenuItem>
       </Submenu>
+      <Submenu name="comp">
+        <template slot="title">
+          <Icon type="gear-b"></Icon>
+          <span class="layout-text">组件管理</span>
+        </template>
+        <MenuItem name="imageEdit">
+          <Icon type="crop"></Icon>
+          <span class="layout-text">图片预览编辑</span>
+        </MenuItem>
+        <MenuItem name="uploadFile">
+          <Icon type="android-upload"></Icon>
+          <span class="layout-text">文件上传</span>
+        </MenuItem>
+      </Submenu>
     </Menu>
     <div class="dropdown-container" active-name="" v-show="shrink">
       <div class="layout-logo-left"></div>
@@ -106,6 +120,21 @@
           <DropdownItem name="swapForm">
             <Icon type="arrow-swap"></Icon>
             <span class="layout-text">工作流</span>
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <Dropdown placement="right-start">
+        <Button type="text" class="dropdown-btn">
+          <Icon type="gear-b" size="20"></Icon>
+        </Button>
+        <DropdownMenu class="dropdown-menu" slot="list">
+          <DropdownItem name="imageEdit">
+            <Icon type="crop"></Icon>
+            <span class="layout-text">图片预览编辑</span>
+          </DropdownItem>
+          <DropdownItem name="swapForm">
+            <Icon type="android-upload"></Icon>
+            <span class="layout-text">文件上传</span>
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>

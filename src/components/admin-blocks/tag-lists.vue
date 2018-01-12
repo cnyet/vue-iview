@@ -28,15 +28,16 @@
 
 <template>
   <div class="tag-container">
-      <div class="tag-group">
+      <div class="tag-group" :style="styleObj">
         <transition-group tag="div" name="taglist-moving-animation">
           <Tag
             type="dot"
+            :ref="item.name"
             v-for="(item, index) in openedTags"
             :key="item.name"
             :name="item.name"
             :closable="item.name==='admin'?false:true"
-            @click.native="linkTo(item)"
+            @click.native="linkTo(item, index)"
             @on-close="closeTag"
             :color="item.name===currentTag?'blue':'default'">{{item.title}}</Tag>
         </transition-group>
@@ -62,7 +63,7 @@ export default {
   mixins: [mixin],
   data(){
     return {
-
+      styleObj: null
     };
   },
   methods: {
@@ -89,8 +90,48 @@ export default {
         this.linkTo(lastOpenedTag);
       }
     },
-    linkTo(item){
-      console.log(this.$el.offsetWidth);
+    linkTo(item, index){
+      let tagWrap = this.$el;
+      let tagWrapWidth = tagWrap.offsetWidth-120;
+      let tagGroup = tagWrap.firstChild;
+      let tagGroupWidth = tagGroup.offsetWidth;
+      let currentTag = this.$refs[item.name][0].$el.offsetLeft;
+      if(tagGroupWidth > tagWrapWidth){
+        let tagGroupLeft = tagGroup.offsetLeft;
+        let tagGroupRight = tagGroupWidth-tagWrapWidth-Math.abs(tagGroupLeft);
+        if(currentTag < tagGroupWidth/2){
+          let num = this.openedTags[index-1] ? index-1 : index;
+          let previousTagName = this.openedTags[num].name;
+          let previousTagLeft = this.$refs[previousTagName][0].$el.offsetLeft;
+          console.log(previousTagLeft);
+          if(tagGroupLeft < 0){
+            /*向右移动*/
+            this.styleObj = {
+              left: parseFloat(-previousTagLeft+10)+"px"
+            };
+            console.log("向右移动"+previousTagLeft);
+          }else{
+            console.log("不向右移动");
+          }
+        }else{
+          let num = this.openedTags[index+1] ? index+1 : index;
+          let nextTagName = this.openedTags[num].name;
+          let nextTagLeft = this.$refs[nextTagName][0].$el.offsetLeft;
+          let nextTagWidth = this.$refs[nextTagName][0].$el.offsetWidth;
+          let moveLeft = parseFloat(nextTagLeft+nextTagWidth-tagWrapWidth);
+          if(tagGroupRight > 0 && moveLeft > 0){
+            /*向左移动*/
+            this.styleObj = {
+              left: parseFloat(-moveLeft-5)+"px"
+            };
+            console.log("向左移动"+moveLeft);
+          }else{
+            console.log("不向左移动");
+          }
+        }
+      }else{
+        console.log("不移动");
+      }
       localStorage.currentTag = item.name;
       this.$router.push({
         name: item.name,

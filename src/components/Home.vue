@@ -28,6 +28,7 @@
           <li><a href="#">Work</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Contact</a></li>
+          <li style="margin-left:20px;"><Button type="info" @click="toLogin">登录</Button></li>
         </ul>
       </div>
     </div>
@@ -85,6 +86,13 @@ export default {
     return {
       value: 0
     };
+  },
+  methods: {
+    toLogin(){
+      this.$router.push({
+        name: "login"
+      });
+    }
   }
 };
 </script>

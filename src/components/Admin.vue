@@ -34,12 +34,12 @@
             <BreadcrumbItem
               v-for="(item, index) in currentPath"
               :key="item.name"
-              :href="(index!==currentPath.length-1)&&item.name!=='tables'&&item.name!=='forms'?item.path:''">{{item.title}}</BreadcrumbItem>
+              :href="showHref(item, index)">{{item.title}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
       </div>
       <div class="tags-wrap">
-        <tag-lists></tag-lists>
+        <tag-lists :shrink="shrink" :offsetLeft="tagOffsetLeft"></tag-lists>
       </div>
       <div class="layout-content">
         <div class="layout-page">
@@ -77,6 +77,7 @@ export default {
       dataSource: null,
       mesCount: 3,
       userInfo: null,
+      tagOffsetLeft: false
     };
   },
   computed: {
@@ -164,6 +165,14 @@ export default {
         this.$router.push("/login");
       }
     },
+    showHref(item, index){
+      let len = this.currentPath.length;
+      if((index!==len-1) && item.name!=='tables' && item.name!=='forms' && item.name!=='component'){
+        return item.path;
+      }else{
+        return null;
+      }
+    },
     getUserInfo(){
       return {user: util.getCookie("user"), uid: util.getCookie("uid")};
       // this.$http.get("/GET/userLists").then(function(res){
@@ -173,8 +182,7 @@ export default {
       // }).catch(function(error){
       //   console.log(error);
       // });
-    },
-
+    }
   },
   created(){
     this.userInfo = this.getUserInfo();

@@ -61,10 +61,20 @@ import mixin from "../../util/mixin";
 export default {
   name: "tagLists",
   mixins: [mixin],
+  props: ["shrink"],
   data(){
     return {
       styleObj: null
     };
+  },
+  watch: {
+    shrink: function(val, oldVal){
+      if(val && this.styleObj){
+        this.styleObj = {
+          left: 0
+        };
+      }
+    }
   },
   methods: {
     closeTag(event, name){
@@ -103,13 +113,12 @@ export default {
           let num = this.openedTags[index-1] ? index-1 : index;
           let previousTagName = this.openedTags[num].name;
           let previousTagLeft = this.$refs[previousTagName][0].$el.offsetLeft;
-          console.log(previousTagLeft);
           if(tagGroupLeft < 0){
             /*向右移动*/
             this.styleObj = {
               left: parseFloat(-previousTagLeft+10)+"px"
             };
-            console.log("向右移动"+previousTagLeft);
+            console.log("向右移动"+this.styleObj.left);
           }else{
             console.log("不向右移动");
           }
@@ -124,7 +133,7 @@ export default {
             this.styleObj = {
               left: parseFloat(-moveLeft-5)+"px"
             };
-            console.log("向左移动"+moveLeft);
+            console.log("向左移动"+this.styleObj.left);
           }else{
             console.log("不向左移动");
           }
@@ -147,10 +156,25 @@ export default {
       } else {
           this.$store.commit('clearTags', this.currentTag);
       }
+    },
+    computeOffset(){
+      let offsetLeft = this.$refs[this.currentTag][0].$el.offsetLeft;
+      let currentWidth = this.$refs[this.currentTag][0].$el.offsetWidth;
+      let parentOffsetWidth = this.$el.offsetWidth-120;
+      let parentLeft = parseFloat(parentOffsetWidth-(offsetLeft+currentWidth));
+      if((offsetLeft+currentWidth) > parentOffsetWidth){
+        this.styleObj = {
+          left: parentLeft+"px"
+        };
+      }
+      console.log(offsetLeft+currentWidth);
     }
   },
   created(){
 
+  },
+  mounted(){
+    // this.computeOffset();
   }
 };
 </script>

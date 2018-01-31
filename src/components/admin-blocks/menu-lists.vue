@@ -156,9 +156,6 @@ export default {
   },
   methods: {
     changeMenu (active){
-      this.$router.push({
-        name: active
-      });
       if(this.currentTag !== active){
         let tags = null;
         for(let ele of adminRouter){
@@ -184,11 +181,13 @@ export default {
             }
           }
         }
-        console.log(this.openedSubmenuArr);
-        localStorage.setItem("currentTag", active);
-        this.$store.commit("updateCurrentTag", active);
-        this.$store.commit("updateOpenedTags", [tags]);
-        this.$store.commit("updateCurrentPath", active);
+      localStorage.setItem("currentTag", active);
+      this.$store.commit("updateCurrentTag", active);
+      this.$store.commit("updateOpenedTags", [tags]);
+      this.$store.commit("updateCurrentPath", active);
+      this.$router.push({
+        name: active
+      });
       }
     },
     changeSubmenu(arr){

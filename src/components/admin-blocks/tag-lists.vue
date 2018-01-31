@@ -1,35 +1,36 @@
-<style scoped lang="less">
+<style scoped>
   .tag-container{
     height: 44px;
     overflow: hidden;
     padding-right: 120px;
     position: relative;
-    .tag-group{
-      overflow: visible;
-      white-space: nowrap;
-      padding: 5px 0 5px 10px;
-      position: absolute;
-      left: 0;
-      top: 0;
-      transition: left .3s ease;
-    }
-    .tag-list-drop{
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 120px;
-      height: 44px;
-      padding: 8px 10px;
-      background-color: white;
-      box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
-    }
+  }
+  .tag-container .tag-group{
+    overflow: visible;
+    white-space: nowrap;
+    padding: 5px 0 5px 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: left .3s ease;
+  }
+  .tag-container .tag-list-drop{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 120px;
+    height: 44px;
+    padding: 8px 10px;
+    background-color: white;
+    box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
   }
 </style>
+
 
 <template>
   <div class="tag-container">
       <div class="tag-group" :style="styleObj">
-        <transition-group tag="div" name="taglist-moving-animation">
+        <transition-group tag="div" class="tag-ivu" name="taglist-moving-animation">
           <Tag
             type="dot"
             :ref="item.name"
@@ -74,6 +75,9 @@ export default {
           left: 0
         };
       }
+    },
+    currentTag: function(val, oldVal){
+      this.computeOffset(this.currentTag);
     }
   },
   methods: {
@@ -101,15 +105,36 @@ export default {
       }
     },
     linkTo(item, index){
+      localStorage.currentTag = item.name;
+      this.$router.push({
+        name: item.name,
+        params: ""
+      });
+    },
+    handleTagsOption(name){
+      if (name === 'clearAll') {
+          this.$store.commit('clearTags');
+          this.$router.push({
+              name: 'admin'
+          });
+      } else {
+          this.$store.commit('clearTags', this.currentTag);
+      }
+    },
+    computeOffset(name){
+      let index = this.openedTags.findIndex(function(item, index){
+        return item.name === name;
+      });
       let tagWrap = this.$el;
       let tagWrapWidth = tagWrap.offsetWidth-120;
       let tagGroup = tagWrap.firstChild;
       let tagGroupWidth = tagGroup.offsetWidth;
-      let currentTag = this.$refs[item.name][0].$el.offsetLeft;
+      let currentTagLeft = this.$refs[name][0].$el.offsetLeft;
+      console.log(tagGroupWidth);
       if(tagGroupWidth > tagWrapWidth){
         let tagGroupLeft = tagGroup.offsetLeft;
         let tagGroupRight = tagGroupWidth-tagWrapWidth-Math.abs(tagGroupLeft);
-        if(currentTag < tagGroupWidth/2){
+        if(currentTagLeft < tagGroupWidth/2){
           let num = this.openedTags[index-1] ? index-1 : index;
           let previousTagName = this.openedTags[num].name;
           let previousTagLeft = this.$refs[previousTagName][0].$el.offsetLeft;
@@ -141,40 +166,13 @@ export default {
       }else{
         console.log("不移动");
       }
-      localStorage.currentTag = item.name;
-      this.$router.push({
-        name: item.name,
-        params: ""
-      });
-    },
-    handleTagsOption(name){
-      if (name === 'clearAll') {
-          this.$store.commit('clearTags');
-          this.$router.push({
-              name: 'admin'
-          });
-      } else {
-          this.$store.commit('clearTags', this.currentTag);
-      }
-    },
-    computeOffset(){
-      let offsetLeft = this.$refs[this.currentTag][0].$el.offsetLeft;
-      let currentWidth = this.$refs[this.currentTag][0].$el.offsetWidth;
-      let parentOffsetWidth = this.$el.offsetWidth-120;
-      let parentLeft = parseFloat(parentOffsetWidth-(offsetLeft+currentWidth));
-      if((offsetLeft+currentWidth) > parentOffsetWidth){
-        this.styleObj = {
-          left: parentLeft+"px"
-        };
-      }
-      console.log(offsetLeft+currentWidth);
     }
   },
   created(){
 
   },
   mounted(){
-    // this.computeOffset();
+    this.computeOffset(this.currentTag);
   }
 };
 </script>

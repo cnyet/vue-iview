@@ -181,13 +181,13 @@ export default {
             }
           }
         }
-      localStorage.setItem("currentTag", active);
-      this.$store.commit("updateCurrentTag", active);
-      this.$store.commit("updateOpenedTags", [tags]);
-      this.$store.commit("updateCurrentPath", active);
-      this.$router.push({
-        name: active
-      });
+        localStorage.setItem("currentTag", active);
+        this.$store.commit("updateCurrentTag", active);
+        this.$store.commit("updateOpenedTags", [tags]);
+        this.$store.commit("updateCurrentPath", active);
+        this.$router.push({
+          name: active
+        });
       }
     },
     changeSubmenu(arr){

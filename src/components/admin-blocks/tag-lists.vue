@@ -1,36 +1,41 @@
-<style scoped>
+<style lang="less" scoped>
   .tag-container{
     height: 44px;
     overflow: hidden;
     padding-right: 120px;
     position: relative;
-  }
-  .tag-container .tag-group{
-    overflow: visible;
-    white-space: nowrap;
-    padding: 5px 0 5px 10px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: left .3s ease;
-  }
-  .tag-container .tag-list-drop{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 120px;
-    height: 44px;
-    padding: 8px 10px;
-    background-color: white;
-    box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
+    .tag-group{
+      overflow: visible;
+      white-space: nowrap;
+      padding: 5px 0 5px 10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transition: left .3s ease;
+    }
+    .tag-list-drop{
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 120px;
+      height: 44px;
+      padding: 8px 10px;
+      background-color: white;
+      box-shadow: -3px 2px 15px 3px rgba(0,0,0,.1);
+    }
   }
 </style>
 
+<style>
+  .tag-group .ivu-tag i{
+    width: 8px;
+  }
+</style>
 
 <template>
   <div class="tag-container">
       <div class="tag-group" :style="styleObj">
-        <transition-group tag="div" class="tag-ivu" name="taglist-moving-animation">
+        <transition-group tag="div" name="taglist-moving-animation">
           <Tag
             type="dot"
             :ref="item.name"
@@ -77,7 +82,9 @@ export default {
       }
     },
     currentTag: function(val, oldVal){
-      this.computeOffset(this.currentTag);
+      this.$nextTick(function(){
+        this.computeOffset(val);
+      });
     }
   },
   methods: {
@@ -129,15 +136,15 @@ export default {
       let tagWrapWidth = tagWrap.offsetWidth-120;
       let tagGroup = tagWrap.firstChild;
       let tagGroupWidth = tagGroup.offsetWidth;
-      let currentTagLeft = this.$refs[name][0].$el.offsetLeft;
-      console.log(tagGroupWidth);
+      let groupArr = tagGroup.firstChild.children;
+      let currentTagLeft = groupArr[index].offsetLeft;
       if(tagGroupWidth > tagWrapWidth){
         let tagGroupLeft = tagGroup.offsetLeft;
         let tagGroupRight = tagGroupWidth-tagWrapWidth-Math.abs(tagGroupLeft);
         if(currentTagLeft < tagGroupWidth/2){
           let num = this.openedTags[index-1] ? index-1 : index;
-          let previousTagName = this.openedTags[num].name;
-          let previousTagLeft = this.$refs[previousTagName][0].$el.offsetLeft;
+          let previousTag = groupArr[num];
+          let previousTagLeft = previousTag.offsetLeft;
           if(tagGroupLeft < 0){
             /*向右移动*/
             this.styleObj = {
@@ -149,9 +156,9 @@ export default {
           }
         }else{
           let num = this.openedTags[index+1] ? index+1 : index;
-          let nextTagName = this.openedTags[num].name;
-          let nextTagLeft = this.$refs[nextTagName][0].$el.offsetLeft;
-          let nextTagWidth = this.$refs[nextTagName][0].$el.offsetWidth;
+          let nextTag = groupArr[num];
+          let nextTagLeft = nextTag.offsetLeft;
+          let nextTagWidth = nextTag.offsetWidth;
           let moveLeft = parseFloat(nextTagLeft+nextTagWidth-tagWrapWidth);
           if(tagGroupRight > 0 && moveLeft > 0){
             /*向左移动*/

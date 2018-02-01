@@ -84,38 +84,7 @@ export default {
 
   },
   watch: {
-    // "$route" (to, from){
-      // console.log(to.name);
-      // let tags = null;
-      // for(let ele of adminRouter){
-      //   if(ele.name===to.name){
-      //     tags = {
-      //       title: ele.title,
-      //       name: ele.name,
-      //       path: ele.path
-      //     };
-      //     break;
-      //   }else{
-      //     if(ele.children.length){
-      //       for(let val of ele.children){
-      //         if(val.name === to.name){
-      //           tags = {
-      //             title: val.title,
-      //             name: val.name,
-      //             path: val.path
-      //           };
-      //           break;
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // if(to.name !== "login" && to.name!=="registe"){
-      //   this.$store.commit("updateCurrentTag", to.name);
-      //   this.$store.commit("updateOpenedTags", [tags]);
-      //   this.$store.commit("updateCurrentPath", this.$route.fullPath);
-      // }
-    // }
+
   },
   methods: {
     toggleClick(){
@@ -123,9 +92,6 @@ export default {
     },
     handleDropdown(name){
       if(name === "userCenter"){
-        this.$router.push({
-          name: "userCenter"
-        });
         if(this.currentTag !== name){
           let tags = null;
           for(let ele of adminRouter){
@@ -155,6 +121,9 @@ export default {
           this.$store.commit("updateCurrentTag", name);
           this.$store.commit("updateOpenedTags", [tags]);
           this.$store.commit("updateCurrentPath", name);
+          this.$router.push({
+            name: "userCenter"
+          });
         }
       }else if(name === "logout"){
         localStorage.clear();

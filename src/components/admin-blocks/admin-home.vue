@@ -130,6 +130,38 @@
         </Row>
       </Col>
     </Row>
+    <Row :gutter="10" class="chart-wrap">
+      <Col :md="24" :lg="8">
+        <Card>
+          <p slot="title" class="card-title">
+            <Icon type="android-map"></Icon> 上周每日来访量统计
+          </p>
+          <div class="chart-content">
+            <visite-volume></visite-volume>
+          </div>
+        </Card>
+      </Col>
+      <Col :md="24" :lg="8">
+        <Card>
+          <p slot="title" class="card-title">
+            <Icon type="ios-pulse-strong"></Icon> 数据来源统计
+          </p>
+          <div class="chart-content">
+            <data-source-pie></data-source-pie>
+          </div>
+        </Card>
+      </Col>
+      <Col :md="24" :lg="8">
+        <Card>
+          <p slot="title" class="card-title">
+            <Icon type="android-wifi"></Icon> 各类用户服务调用变化统计
+          </p>
+          <div class="chart-content">
+            <user-flow></user-flow>
+          </div>
+        </Card>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -137,10 +169,16 @@
 import imgSrc from "@/assets/avatar.jpg";
 import util from "@/util";
 import adminMap from "./admin-map";
+import visiteVolume from "./visite-volume";
+import dataSourcePie from "./data-source";
+import userFlow from "./user-flow";
 export default {
   name: "adminHome",
   components: {
-    adminMap
+    adminMap,
+    visiteVolume,
+    dataSourcePie,
+    userFlow
   },
   data(){
     return {
@@ -312,6 +350,12 @@ export default {
       .map-table{
         padding: 15px 5px;
       }
+    }
+  }
+  .chart-wrap{
+    margin-top: 10px;
+    .chart-content{
+      padding: 15px;
     }
   }
 }

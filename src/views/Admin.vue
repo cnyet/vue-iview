@@ -60,7 +60,7 @@ import util from "../util";
 import messageTip from "../components/admin-blocks/message-tip";
 import menuLists from "../components/admin-blocks/menu-lists";
 import tagLists from "../components/admin-blocks/tag-lists";
-import imgSrc from "../assets/avatar.jpg";
+import imgSrc from "../assets/images/avatar.jpg";
 export default {
   name: "admin",
   mixins: [mixin],

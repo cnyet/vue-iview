@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import imgSrc from "@/assets/avatar.jpg";
+import imgSrc from "@/assets/images/avatar.jpg";
 import util from "@/util";
 import adminMap from "./admin-map";
 import visiteVolume from "./visite-volume";

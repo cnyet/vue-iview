@@ -178,7 +178,7 @@ export default {
 <style scoped>
 .wrap{
   height: 100vh;
-  background: #f8f8f9 url("../assets/bg.jpg") no-repeat;
+  background: #f8f8f9 url("../assets/images/bg.jpg") no-repeat;
   background-size: cover;
   display: flex;
   justify-content: center;

@@ -3,23 +3,23 @@
     <Carousel v-model="value" autoplay loop>
       <CarouselItem>
         <div class="carousel-item">
-          <img src="../assets/bg_01.jpg" alt="">
+          <img src="../assets/images/bg_01.jpg" alt="">
         </div>
       </CarouselItem>
       <CarouselItem>
         <div class="carousel-item">
-          <img src="../assets/bg_02.jpg" alt="">
+          <img src="../assets/images/bg_02.jpg" alt="">
         </div>
       </CarouselItem>
       <CarouselItem>
         <div class="carousel-item">
-          <img src="../assets/bg_03.jpg" alt="">
+          <img src="../assets/images/bg_03.jpg" alt="">
         </div>
       </CarouselItem>
     </Carousel>
     <div class="nav-container">
       <div class="nav-logo">
-        <img src="../assets/logo.png">
+        <img src="../assets/images/logo.png">
       </div>
       <div class="nav-navbar">
         <ul>

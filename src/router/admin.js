@@ -1,4 +1,4 @@
-import Admin from "@/components/Admin";
+import Admin from "@/views/Admin";
 import AdminHome from "@/components/admin-blocks/admin-home";
 import Authority from "@/components/admin-blocks/admin-auth";
 import UserCenter from "@/components/admin-blocks/user-center";

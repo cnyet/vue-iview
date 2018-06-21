@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import { adminRouter } from "./admin";
-import Home from '@/components/Home';
-import Login from '@/components/Login';
-import Error404 from '@/components/404';
+import Home from '@/views/Home';
+import Login from '@/views/Login';
+import Error404 from '@/views/404';
 
 Vue.use(Router);
 

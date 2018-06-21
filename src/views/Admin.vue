@@ -57,9 +57,9 @@
 import mixin from "../util/mixin";
 import { adminRouter } from "../router/admin";
 import util from "../util";
-import messageTip from "./admin-blocks/message-tip";
-import menuLists from "./admin-blocks/menu-lists";
-import tagLists from "./admin-blocks/tag-lists";
+import messageTip from "../components/admin-blocks/message-tip";
+import menuLists from "../components/admin-blocks/menu-lists";
+import tagLists from "../components/admin-blocks/tag-lists";
 import imgSrc from "../assets/avatar.jpg";
 export default {
   name: "admin",

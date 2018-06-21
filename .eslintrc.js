@@ -40,7 +40,8 @@ module.exports = {
     "spaced-comment": 0,          //强制在注释中 // 或 /* 使用一致的空格
     "space-infix-ops": 0,         //要求操作符周围有空格,
     "padded-blocks": 0,           //要求或禁止块内填充
-    "comma-dangle": 0,            //要求或禁止末尾逗号
+    "block-spacing": ["error", "always"],   //单行代码两边加空格
+
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }

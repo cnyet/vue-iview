@@ -88,12 +88,10 @@ export default {
         account: [{
           required: true,
           message: "input valid accout",
-          trigger: "blur",
         }],
         password: [{
           required: true,
           message: "input valid password",
-          trigger: "blur"
         }]
       },
       registeRule: {

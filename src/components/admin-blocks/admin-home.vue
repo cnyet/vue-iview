@@ -167,7 +167,7 @@
 
 <script>
 import imgSrc from "@/assets/images/avatar.jpg";
-import util from "@/util";
+import utils from "@/utils";
 import adminMap from "./admin-map";
 import visiteVolume from "./visite-volume";
 import dataSourcePie from "./data-source";
@@ -207,7 +207,7 @@ export default {
   },
   filters: {
     format(date, fmt){
-      return util.formatDate(date, "yyyy-MM-dd");
+      return utils.formatDate(date, "yyyy-MM-dd");
     }
   },
   methods: {
@@ -255,7 +255,7 @@ export default {
     },
   },
   created (){
-    this.userName = util.getCookie("user");
+    this.userName = utils.getCookie("user");
     this.getTodoList(this);
     this.getCityList(this);
   }

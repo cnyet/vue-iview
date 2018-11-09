@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import mixin from "../../util/mixin";
+import mixin from "../../utils/mixin";
 export default {
   name: "tagLists",
   mixins: [mixin],

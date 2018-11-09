@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import mixin from "../util/mixin";
+import mixin from "../utils/mixin";
 import { adminRouter } from "../router/admin";
-import util from "../util";
+import utils from "../utils";
 import messageTip from "../components/admin-blocks/message-tip";
 import menuLists from "../components/admin-blocks/menu-lists";
 import tagLists from "../components/admin-blocks/tag-lists";
@@ -129,8 +129,8 @@ export default {
         localStorage.clear();
         this.$store.commit("updateLogin", false);
         this.$store.commit("updateSession", null);
-        util.delCookie("uid");
-        util.delCookie("user");
+        utils.delCookie("uid");
+        utils.delCookie("user");
         this.$router.push("/login");
       }
     },
@@ -143,7 +143,7 @@ export default {
       }
     },
     getUserInfo(){
-      return {user: util.getCookie("user"), uid: util.getCookie("uid")};
+      return {user: utils.getCookie("user"), uid: utils.getCookie("uid")};
       // this.$http.get("/GET/userLists").then(function(res){
       //   if(res.readyState === 4 && res.status === 200){
       //     this.dataSource = res.data;

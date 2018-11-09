@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import util from "../util";
+import utils from "../utils";
 export default {
   name: "home",
   props: ["status"],
@@ -151,8 +151,8 @@ export default {
     setUserInfo(){
       const user = this.loginForm.account;
       const uid = new Date().getTime().toString(16);
-      util.setCookie("user", user, 1);
-      util.setCookie("uid", uid, 1);
+      utils.setCookie("user", user, 1);
+      utils.setCookie("uid", uid, 1);
       // this.$store.commit("updateCurrentTag", "admin");
       if(typeof (Storage) !== "undefined"){
         localStorage.setItem("isLogin", true);

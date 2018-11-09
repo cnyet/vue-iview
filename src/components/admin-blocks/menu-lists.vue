@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import mixin from "../../util/mixin";
+import mixin from "../../utils/mixin";
 import { adminRouter } from "../../router/admin";
 export default {
   name: "menuLists",

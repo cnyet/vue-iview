@@ -1,0 +1,6 @@
+[{
+  id: "@integer(0, 100)",
+  name: "@ctitle(10)",
+  description: "@csentence",
+  imageUrl: "@url"
+}]

@@ -116,7 +116,7 @@ export default {
       padding: 15px;
       float: left;
       img{
-        width: 50px;
+        width: auto;
         height: 50px;
       }
     }
